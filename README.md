@@ -9,4 +9,6 @@ This is a gym booking web application built using react
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-
+To launch the connection to the server,
+cd into backend\ then do : 
+    npm run start

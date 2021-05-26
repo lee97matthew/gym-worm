@@ -12,18 +12,16 @@ router.route('/add').post((req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const password = req.body.password;
-  const creditScore = Number(req.body.creditScore);
 
   const newUser = new User({
       email,
       firstName,
       lastName,
       password,
-      creditScore,
     });
 
   newUser.save()
-    .then(() => res.json('User added!'))
+    .then(() => res.json('User Added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

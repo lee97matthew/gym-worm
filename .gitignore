@@ -1,0 +1,6 @@
+/node_modules
+backend/node_modules/term-size/vendor/.DS_Store
+backend/node_modules/term-size/vendor/macos/.DS_Store
+backend/package-lock.json
+npm-debug.log
+package-lock.json

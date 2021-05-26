@@ -21,7 +21,7 @@ router.route('/add').post((req, res) => {
     });
 
   newSlot.save()
-    .then(() => res.json('Slot created!'))
+    .then(() => res.json('Slot Created!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -35,7 +35,7 @@ router.route('/:id').get((req, res) => {
 // Delete one slot by the slot's ID
 router.route('/:id').delete((req, res) => {
   Slot.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Slot deleted.'))
+    .then(() => res.json('Slot Deleted.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -46,11 +46,10 @@ router.route('/update/:id').post((req, res) => {
       slot.date = Date.parse(req.body.date);
       slot.startTime = Number(req.body.startTime);
       slot.capacity = Number(req.body.capacity);
-      slot.bookingList = Array(req.body.bookingList);
-      slot.whiteList = Array(req.body.whiteList);
+      slot.waitList = Array(req.body.waitList);
 
       slot.save()
-        .then(() => res.json('Slot updated!'))
+        .then(() => res.json('Slot Updated!'))
         .catch(err =>   s.status(400).json('Error: ' + err));
     })
     .catch(err => res.status(400).json('Error: ' + err));
