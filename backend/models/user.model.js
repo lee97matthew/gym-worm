@@ -9,10 +9,9 @@ const userSchema = new Schema({
   password: { type: String, required: true, minlength: 6 },
   creditScore: {type: Number, required: true, default: 0 },
   bookings: { type: Array, required: false },
-  ban: { 
-      duration: { type: Number, required: false },
-      startDate:  { type: Date, required: false },
-    } 
+  banStatus: { type: Boolean, required: true, default: false},
+  banDuration: { type: Number, required: true, default: 0 },
+  banStartDate: { type: Date, required: true, default: Date.now },
 }, {
   timestamps: true,
 });
