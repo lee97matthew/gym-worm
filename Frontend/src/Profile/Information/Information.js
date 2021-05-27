@@ -46,7 +46,7 @@ class Information extends Component {
                         />
 
                         <Button type="primary" shape="round" style={{background: "#96c0ce", width: 200, border: "none"}}>
-                            Enter
+                            Update
                         </Button>
 
                         <Button 

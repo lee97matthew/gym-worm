@@ -6,8 +6,7 @@ const slotSchema = new Schema({
   date: { type: Date, required: true },
   startTime: { type: Number, required: true },
   capacity: { type: Number, required: true, minlength: 0 },
-  bookingList: { type: Array, required: false },
-  whiteList: { type: Array, required: false },
+  waitList: { type: Array, required: false },
 }, {
   timestamps: true,
 });
