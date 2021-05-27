@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Avatar, Image, Input, Tooltip, Row, Space, Button } from 'antd';
 import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import './Information.css'
+import './Information.css';
+import history from "../../history";
 
 class Information extends Component {
     render() {
@@ -46,6 +47,18 @@ class Information extends Component {
 
                         <Button type="primary" shape="round" style={{background: "#96c0ce", width: 200, border: "none"}}>
                             Enter
+                        </Button>
+
+                        <Button 
+                            type="primary" 
+                            shape="round" 
+                            style={{background: "#96c0ce", width: 200, border: "none", color: "red"}}
+                            onClick={() => { 
+                                history.push('/');
+                                window.location.reload(false);
+                            }}
+                        >
+                            Log Out
                         </Button>
                     </Space>
                 </Row>

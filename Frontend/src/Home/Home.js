@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Row, Col, Space } from 'antd';
 import 'antd/dist/antd.css';
 import './Home.css';
-import BookingDate from "./DisplayBookings/DisplayBookings";
+import Navbar from '../components/Navbar/Navbar';
 import DisplayBookings from './DisplayBookings/DisplayBookings';
 import Credits from './Credits/Credits';
 
@@ -13,6 +13,7 @@ class Home extends Component {
     render() {
         return(
             <div>
+                <Navbar/>
                 <Layout>
                     <Header className='theTitle'>
                         <p1>Hi User</p1>

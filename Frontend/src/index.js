@@ -7,12 +7,12 @@ import './index.css';
 
 import Navbar from './components/Navbar/Navbar';
 import Routes from './Routes';
+import Login from './Login/Login';
 
 ReactDOM.render(
     <Router>
         <div className="App">
-            <Navbar />
-            <Routes />
+            <Routes/>
         </div>
     </Router>
     ,document.getElementById('root')

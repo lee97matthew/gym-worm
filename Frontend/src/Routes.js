@@ -1,21 +1,25 @@
 import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from "./Home/Home";
 import Bookings from "./Bookings/Bookings";
 import Profile from "./Profile/Profile";
 import history from "./history";
+import Login from "./Login/Login";
+import Signup from "./Signup/Signup";
 
 class Routes extends Component {
     render() {
         return (
-            <Router history={history}>
+            <BrowserRouter history={history}>
                 <Switch>
-                    <Route path="/Home" exact component={Home} />
+                    <Route path="/" exact component={Login} />
+                    <Route path="/Home" component={Home} />
                     <Route path="/Bookings" component={Bookings} />
                     <Route path="/Profile" component={Profile} />
+                    <Route path="/Signup" component={Signup} />
                 </Switch>
-            </Router>
+            </BrowserRouter>
         )
     }
 }

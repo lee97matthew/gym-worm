@@ -3,6 +3,7 @@ import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';
 import Information from "./Information/Information";
 import Notif from "./Notif/Notif";
+import Navbar from '../components/Navbar/Navbar';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -17,6 +18,7 @@ class Profile extends Component {
     render() {
         return (
             <div style={{background:'#74828F'}}>
+                <Navbar/>
                 <Layout style={{background:'#74828F'}}>
                     <Sider style={{
                         overflow: 'auto',
