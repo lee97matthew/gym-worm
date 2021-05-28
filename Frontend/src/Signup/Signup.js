@@ -84,17 +84,17 @@ function Signup() {
         setDisabled(true);
     };
 
-    useEffect((first, last, mail, pass, confirm) => {
-        if (first === ''  || last === '' || mail === '' || pass === '' ) {
+    useEffect(() => {
+        if (firstName === ''  || lastName === '' || email === '' || password === '' ) {
             setDisabled(true);
         } else {
-            if (password.length < 6 || confirm !== password) {
+            if (password.length < 6 || confirmPassword !== password) {
                 setDisabled(true);
             } else {
                 setDisabled(false);
             }
         }
-    }, [firstName, lastName, email, password, confirmPassword]);
+    });
     
     return (
     <div style={{ display: 'flex'}}>
@@ -121,7 +121,6 @@ function Signup() {
                     },
                     {
                         type: "email",
-                        pattern: "/.+\@.+\..+/",
                         message: "The input is not valid E-mail!"
                     }
                 ]}
