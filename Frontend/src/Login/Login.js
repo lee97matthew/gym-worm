@@ -32,13 +32,13 @@ const Demo = () => {
     };
 }
 
-function Login() {
+class Login extends Component{
     //const history = useHistory();
   
-  const handleRoute = () =>{ 
+handleRoute = () =>{ 
     history.push("/Profile");
   }
-    //render() {
+    render() {
         return (
         <div style={{ display: 'flex'}}>
             <Row className="pos" type="flex" justify="center" align="center" verticalAlign="middle" >
@@ -107,7 +107,7 @@ function Login() {
             </Row>
         </div>
         )
-    //}
+    }
 }
 
 export default Login;

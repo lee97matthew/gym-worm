@@ -5,8 +5,7 @@ import Information from "./Information/Information";
 import Notif from "./Notif/Notif";
 import Navbar from '../components/Navbar/Navbar';
 
-const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 class Profile extends Component {
     state = { clicked: true }

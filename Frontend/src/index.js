@@ -5,9 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 //import 'bootstrap/dist/css/bootstrap.css';
 
-import Navbar from './components/Navbar/Navbar';
 import Routes from './Routes';
-import Login from './Login/Login';
 
 ReactDOM.render(
     <Router>

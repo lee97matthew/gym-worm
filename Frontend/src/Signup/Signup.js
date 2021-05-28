@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Layout, Checkbox, Row } from 'antd';
+import { Form, Input, Button, Row } from 'antd';
 import 'antd/dist/antd.css';
 import './Signup.css';
 import history from './../history';
-import img from "../loginPhoto.jpeg";
 
-const { Header, Footer, Sider, Content } = Layout;
 document.body.style = 'background: #74828F;';
 
 const layout = {
@@ -110,7 +108,11 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.emailInputHandler} value={this.emailState.emailInput}/>
+                    <Input 
+                        type="text" 
+                        onChange={this.emailInputHandler} 
+                        value={this.emailState.emailInput}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -124,7 +126,11 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.firstNameInputHandler} value={this.firstName.firstNameInput}/>
+                    <Input 
+                        type="text" 
+                        onChange={this.firstNameInputHandler} 
+                        value={this.firstName.firstNameInput}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -138,7 +144,11 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.lastNameInputHandler} value={this.lastName.lastNameInput}/>
+                    <Input 
+                        type="text" 
+                        onChange={this.lastNameInputHandler} 
+                        value={this.lastName.lastNameInput}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -166,7 +176,10 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input.Password onChange={this.confirmPasswordInputHandler} value={this.confirmPassword.confirmPasswordInput}/>
+                    <Input.Password 
+                        onChange={this.confirmPasswordInputHandler} 
+                        value={this.confirmPassword.confirmPasswordInput}
+                    />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
