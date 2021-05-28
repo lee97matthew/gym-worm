@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Layout, Checkbox, Row } from 'antd';
+import { Form, Input, Button, Checkbox, Row } from 'antd';
 import 'antd/dist/antd.css';
 import './Login.css';
 import history from './../history';
-import img from "../loginPhoto.jpeg";
 
-const { Header, Footer, Sider, Content } = Layout;
 document.body.style = 'background: #74828F;';
 
 const layout = {

@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar/Navbar';
 import DisplayBookings from './DisplayBookings/DisplayBookings';
 import Credits from './Credits/Credits';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 document.body.style = 'background: #74828F;';
 
 class Home extends Component {

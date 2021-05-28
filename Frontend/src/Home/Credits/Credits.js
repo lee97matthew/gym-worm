@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Layout, Card } from 'antd';
+import { Card } from 'antd';
 import { SmileOutlined, FrownOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './Credits.css';
 
-const { Header, Footer, Sider, Content } = Layout;
 var num = 90;
 
 class Credits extends Component {

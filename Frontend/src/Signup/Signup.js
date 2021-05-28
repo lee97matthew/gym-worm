@@ -34,13 +34,56 @@ const Demo = () => {
     };
 }
 
-function Signup() {
-    //const history = useHistory();
-  
-  const handleRoute = () =>{ 
-    history.push("/Profile");
-  }
-    //render() {
+class Signup extends Component {
+    handleRoute = () =>{ 
+        history.push("/Profile");
+    }
+
+    emailState =  {
+        emailInput: ""
+    }
+
+    emailInputHandler = (event) => {
+        this.setState = ({
+            emailInput: event.target.value
+        })
+        console.log(this.emailState.emailInput)
+    }
+
+    firstName = {
+        firstNameInput: "",
+    }
+
+    firstNameInputHandler = (event) => {
+        this.setState = ({
+            firstNameInput: event.target.value
+        })
+        console.log(this.firstName.firstNameInput)
+    }
+
+    lastName = {
+        lastNameInput: "",
+    }
+
+    lastNameInputHandler = (event) => {
+        this.setState = ({
+            lastNameInput: event.target.value
+        })
+        console.log(this.lastName.lastNameInput)
+    }
+
+    confirmPassword = {
+        confirmPasswordInput: "",
+    }
+
+    confirmPasswordInputHandler = (event) => {
+        this.setState = ({
+            confirmPasswordInput: event.target.value
+        })
+        console.log(this.confirmPassword.confirmPasswordInput)
+    }
+
+    render() {
         return (
         <div style={{ display: 'flex'}}>
             <Row className="pos" type="flex" justify="center" align="center" verticalAlign="middle" >
@@ -57,17 +100,45 @@ function Signup() {
                 >
 
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label="Email"
+                    name="email"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Please input your Email!',
                         },
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input />
+                    <Input type="text" onChange={this.emailInputHandler} value={this.emailState.emailInput}/>
+                </Form.Item>
+
+                <Form.Item
+                    label="FirstName"
+                    name="firstName"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your First Name!',
+                        },
+                    ]}
+                    style={{minWidth: 500}}
+                >
+                    <Input type="text" onChange={this.firstNameInputHandler} value={this.firstName.firstNameInput}/>
+                </Form.Item>
+
+                <Form.Item
+                    label="LastName"
+                    name="lastName"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your First Name!',
+                        },
+                    ]}
+                    style={{minWidth: 500}}
+                >
+                    <Input type="text" onChange={this.lastNameInputHandler} value={this.lastName.lastNameInput}/>
                 </Form.Item>
 
                 <Form.Item
@@ -95,7 +166,7 @@ function Signup() {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input.Password />
+                    <Input.Password onChange={this.confirmPasswordInputHandler} value={this.confirmPassword.confirmPasswordInput}/>
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
@@ -119,7 +190,7 @@ function Signup() {
             </Row>
         </div>
         )
-    //}
+    }
 }
 
 export default Signup;

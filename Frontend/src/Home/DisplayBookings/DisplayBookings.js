@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Card } from 'antd';
+import { Card } from 'antd';
 import 'antd/dist/antd.css';
 import './DisplayBookings.css';
-
-const { Header, Footer, Sider, Content } = Layout;
 
 class DisplayBookings extends Component {
     render() {
