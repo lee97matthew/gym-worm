@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox, Row } from 'antd';
 import 'antd/dist/antd.css';
 import './Login.css';
@@ -21,93 +21,109 @@ const tailLayout = {
         span: 16,
     },
 };
-  
-const Demo = () => {
+
+function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [disabled, setDisabled] = useState(false);
+
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+    }
+
+    const onChangePassword = (e) => {
+        setPassword(e.target.value);
+    }
+
     const onFinish = (values) => {
         console.log('Success:', values);
+        setDisabled(false);
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
+        setDisabled(true);
     };
-}
 
-class Login extends Component{
-    //const history = useHistory();
-  
-handleRoute = () =>{ 
-    history.push("/Profile");
-  }
-    render() {
-        return (
-        <div style={{ display: 'flex'}}>
-            <Row className="pos" type="flex" justify="center" align="center" verticalAlign="middle" >
-            <h1 className="welcome">Welcome</h1>
-            <Form
-                {...layout}
-                name="basic"
-                justify="center"
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={Demo.onFinish}
-                onFinishFailed={Demo.onFinishFailed}
-                >
+    useEffect(() => {
+        if (email === '' || password === '' ) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
+    });
 
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your email!',
-                        },
-                    ]}
-                    style={{minWidth: 500}}
-                >
-                    <Input />
-                </Form.Item>
+    return (
+    <div style={{ display: 'flex'}}>
+        <Row className="pos" type="flex" justify="center" align="center" verticalAlign="middle" >
+        <h1 className="welcome">Welcome</h1>
+        <Form
+            {...layout}
+            name="basic"
+            justify="center"
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            >
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                    style={{minWidth: 500}}
-                >
-                    <Input.Password />
-                </Form.Item>
+            <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your email!',
+                    },
+                ]}
+                style={{minWidth: 500}}
+            >
+                <Input type="text" onChange={onChangeEmail} value={email}/>
+            </Form.Item>
 
-                <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your password!',
+                    },
+                ]}
+                style={{minWidth: 500}}
+            >
+                <Input.Password type="text" onChange={onChangePassword} value={password}/>
+            </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={() => { 
-                                history.push('/Home')
-                                window.location.reload(false);
-                            } }>
-                        Log in
-                    </Button>
-                </Form.Item>
+            <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                <Checkbox>Remember me</Checkbox>
+            </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={() => { 
-                                history.push('/Signup')
-                                window.location.reload(false);
-                            } }>
-                        Sign Up
-                    </Button>
-                </Form.Item>
-            </Form>
-            </Row>
-        </div>
-        )
-    }
+            <Form.Item {...tailLayout}>
+                <Button type="primary" 
+                        htmlType="submit" 
+                        disabled={ disabled }
+                        onClick={() => { 
+                            history.push('/Home')
+                            window.location.reload(false);
+                        } }>
+                    Log in
+                </Button>
+            </Form.Item>
+
+            <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit" onClick={() => { 
+                            history.push('/Signup')
+                            window.location.reload(false);
+                        } }>
+                    Sign Up
+                </Button>
+            </Form.Item>
+        </Form>
+        </Row>
+    </div>
+    )
 }
 
 export default Login;
