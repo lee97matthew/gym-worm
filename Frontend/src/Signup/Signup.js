@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import './Signup.css';
 import history from './../history';
 import img from "../loginPhoto.jpeg";
+import axios from 'axios';
 
 const { Header, Footer, Sider, Content } = Layout;
 document.body.style = 'background: #74828F;';
@@ -39,48 +40,70 @@ class Signup extends Component {
         history.push("/Profile");
     }
 
-    emailState =  {
-        emailInput: ""
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            creditScore: 0,
+        };
+
+        this.onChangeFirstName = this.onChangeFirstName.bind(this);
+        this.onChangeLastName = this.onChangeLastName.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangeCreditScore = this.onChangeCreditScore.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    emailInputHandler = (event) => {
-        this.setState = ({
-            emailInput: event.target.value
+    onChangeFirstName(e) {
+        this.setState({
+            firstName: e.target.value
         })
-        console.log(this.emailState.emailInput)
     }
 
-    firstName = {
-        firstNameInput: "",
-    }
-
-    firstNameInputHandler = (event) => {
-        this.setState = ({
-            firstNameInput: event.target.value
+    onChangeLastName(e) {
+        this.setState({
+            lastName: e.target.value
         })
-        console.log(this.firstName.firstNameInput)
     }
-
-    lastName = {
-        lastNameInput: "",
-    }
-
-    lastNameInputHandler = (event) => {
-        this.setState = ({
-            lastNameInput: event.target.value
+    
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
         })
-        console.log(this.lastName.lastNameInput)
     }
 
-    confirmPassword = {
-        confirmPasswordInput: "",
-    }
-
-    confirmPasswordInputHandler = (event) => {
-        this.setState = ({
-            confirmPasswordInput: event.target.value
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
         })
-        console.log(this.confirmPassword.confirmPasswordInput)
+    }
+
+    onChangeCreditScore(e) {
+        this.setState({
+            creditScore: e.target.value
+        })
+    }
+
+    onSubmit(e) {
+        const user = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            creditScore: this.state.creditScore,
+        }
+
+        console.log(user);
+
+        axios.post('http://localhost:5000/users/add', user)
+            .then(res => console.log(res.data));
+        
+        alert("User Created");
     }
 
     render() {
@@ -110,7 +133,7 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.emailInputHandler} value={this.emailState.emailInput}/>
+                    <Input type="text" onChange={this.onChangeEmail} value={this.state.email}/>
                 </Form.Item>
 
                 <Form.Item
@@ -124,7 +147,7 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.firstNameInputHandler} value={this.firstName.firstNameInput}/>
+                    <Input type="text" onChange={this.onChangeFirstName} value={this.state.firstName}/>
                 </Form.Item>
 
                 <Form.Item
@@ -138,7 +161,7 @@ class Signup extends Component {
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input type="text" onChange={this.lastNameInputHandler} value={this.lastName.lastNameInput}/>
+                    <Input type="text" onChange={this.onChangeLastName} value={this.state.lastName}/>
                 </Form.Item>
 
                 <Form.Item
@@ -147,6 +170,7 @@ class Signup extends Component {
                     rules={[
                         {
                             required: true,
+                            minLength: 6,
                             message: 'Please input your password!',
                         },
                     ]}
@@ -161,16 +185,18 @@ class Signup extends Component {
                     rules={[
                         {
                             required: true,
+                            minLength: 6,
                             message: 'Please confirm your password!',
                         },
                     ]}
                     style={{minWidth: 500}}
                 >
-                    <Input.Password onChange={this.confirmPasswordInputHandler} value={this.confirmPassword.confirmPasswordInput}/>
+                    <Input.Password onChange={this.onChangePassword} value={this.state.password}/>
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit" onClick={() => { 
+                                this.onSubmit()
                                 history.push('/Home')
                                 window.location.reload(false);
                             } }>
