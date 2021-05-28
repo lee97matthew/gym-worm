@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+const bcrypt = require("bcryptjs");
 
 router.route('/').get((req, res) => {
   User.find()
@@ -8,11 +9,19 @@ router.route('/').get((req, res) => {
 });
 
 // Add request
-router.route('/add').post((req, res) => {
-  const email = req.body.email;
+router.route('/add').post(async (req, res) => {
+  const body = req.body;
+  const user = new User(body);
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt); // Encrypting password
+  user.save()
+    .then(() => res.json('User Added!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+  /*const email = req.body.email;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const password = req.body.password;
+  const password = hashedPassword;
 
   const newUser = new User({
       email,
@@ -23,7 +32,7 @@ router.route('/add').post((req, res) => {
 
   newUser.save()
     .then(() => res.json('User Added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json('Error: ' + err));*/
 });
 
 // Find one slot by user's email

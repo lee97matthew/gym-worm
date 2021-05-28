@@ -5,6 +5,7 @@ import './Signup.css';
 import history from './../history';
 import img from "../loginPhoto.jpeg";
 import axios from 'axios';
+import bcrypt from 'bcryptjs';
 
 document.body.style = 'background: #74828F;';
 
@@ -57,7 +58,7 @@ function Signup() {
         setCreditScore(e.target.value);
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) =>  {
         const user = {
             firstName: firstName,
             lastName: lastName,
@@ -68,7 +69,7 @@ function Signup() {
 
         console.log(user);
 
-        axios.post('http://localhost:5000/users/add', user)
+         axios.post('http://localhost:5000/users/add', user)
             .then(res => console.log(res.data));
         
         alert("User Created");

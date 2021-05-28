@@ -35,6 +35,20 @@ function Login() {
         setPassword(e.target.value);
     }
 
+    const onSubmit = (e) => {
+        const user = {
+            email: email,
+            password: password,
+        }
+
+        console.log(user);
+
+        /*axios.post('http://localhost:5000/users', user)
+            .then(res => console.log(res.data));
+        
+        alert("User ");*/
+    }
+
     const onFinish = (values) => {
         console.log('Success:', values);
         setDisabled(false);
@@ -105,6 +119,7 @@ function Login() {
                         htmlType="submit" 
                         disabled={ disabled }
                         onClick={() => { 
+                            onSubmit()
                             history.push('/Home')
                             window.location.reload(false);
                         } }>
