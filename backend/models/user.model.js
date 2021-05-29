@@ -12,6 +12,12 @@ const userSchema = new Schema({
   banStatus: { type: Boolean, required: true, default: false},
   banDuration: { type: Number, required: true, default: 0 },
   banStartDate: { type: Date, required: true, default: Date.now },
+  roles: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role"
+    }
+  ]
 }, {
   timestamps: true,
 });
