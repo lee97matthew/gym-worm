@@ -31,7 +31,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [creditScore, setCreditScore] = useState(0);
+    const [creditScore, setCreditScore] = useState(100);
     const [disabled, setDisabled] = useState(false);
 
     const onChangeFirstName = (e) => {

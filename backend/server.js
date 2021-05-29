@@ -37,12 +37,14 @@ connection.once('open', () => {
 });
 
 // Initialize Routes
-const slotsRouter = require('./routes/slots');
-const usersRouter = require('./routes/users');
+//    -- old routes
+    const slotsRouter = require('./routes/slots');
+    const usersRouter = require('./routes/users');
 
-app.use('/slots', slotsRouter); // Slots DB
-app.use('/users', usersRouter); // Users DB
+    app.use('/slots', slotsRouter); // Slots DB
+    app.use('/users', usersRouter); // Users DB
 
+//    -- new routes
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Gym Worm." });
 });
@@ -50,6 +52,7 @@ app.get("/", (req, res) => {
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 
+// Error handling, disable for now
 /*app.use(function (err, req, res, next) {
   console.error(err.stack)
   res.status(500).send('Something broke!')
