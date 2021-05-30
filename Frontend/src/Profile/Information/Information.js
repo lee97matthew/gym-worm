@@ -3,57 +3,69 @@ import { Avatar, Image, Input, Tooltip, Row, Space, Button } from 'antd';
 import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './Information.css';
 import history from "../../history";
+import AuthService from "../../services/auth.service";
 
 class Information extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentUser: AuthService.getCurrentUser()
+        };
+    }
+
     render() {
-        return(
-            <div style={{background:"74828F", alignItems: "center"}}>
-                <Row justify="center" style={{ padding: 20}}>
+        const { currentUser } = this.state;
+
+        return (
+            <div style={{ background: "74828F", alignItems: "center" }}>
+                <Row justify="center" style={{ padding: 20 }}>
                     <Space direction="vertical" size={'large'} align='center'>
-                        <Avatar style={{alignItems: 'center'}}
+                        <Avatar style={{ alignItems: 'center' }}
                             src={<Image src="https://i.chzbgr.com/full/9355435008/h67614A96/dish" />}
                             size={200}
                         />
 
-                        <Input style={{ borderRadius: 35, width: 500}}
-                            placeholder="Username"
+                        <Input style={{ borderRadius: 35, width: 500 }}
+                            placeholder=/*"Name"*/ {currentUser.firstName + " " + currentUser.lastName}
+                            //value= {currentUser.firstName + " " + currentUser.lastName}
                             prefix={<UserOutlined className="site-form-item-icon" />}
                             suffix={
-                                <Tooltip title="Extra information">
-                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                                <Tooltip title="Name">
+                                    <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                                 </Tooltip>
                             }
                         />
 
-                        <Input style={{ borderRadius: 35, width: 500}}
-                            placeholder="Email"
+                        <Input style={{ borderRadius: 35, width: 500 }}
+                            placeholder=/*"Email"*/ {currentUser.email}
                             prefix={<MailOutlined className="site-form-item-icon" />}
                             suffix={
-                                <Tooltip title="Extra information">
-                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                                <Tooltip title="Email">
+                                    <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                                 </Tooltip>
                             }
                         />
 
-                        <Input style={{ borderRadius: 35, width: 500}}
+                        <Input style={{ borderRadius: 35, width: 500 }}
                             placeholder="Contact Number"
                             prefix={<PhoneOutlined className="site-form-item-icon" />}
                             suffix={
-                                <Tooltip title="Extra information">
-                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                                <Tooltip title="Contact Number">
+                                    <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                                 </Tooltip>
                             }
                         />
 
-                        <Button type="primary" shape="round" style={{background: "#96c0ce", width: 200, border: "none"}}>
+                        <Button type="primary" shape="round" style={{ background: "#96c0ce", width: 200, border: "none" }}>
                             Update
                         </Button>
 
-                        <Button 
-                            type="primary" 
-                            shape="round" 
-                            style={{background: "#96c0ce", width: 200, border: "none", color: "red"}}
-                            onClick={() => { 
+                        <Button
+                            type="primary"
+                            shape="round"
+                            style={{ background: "#96c0ce", width: 200, border: "none", color: "red" }}
+                            onClick={() => {
                                 history.push('/');
                                 window.location.reload(false);
                             }}

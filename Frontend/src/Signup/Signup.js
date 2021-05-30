@@ -5,7 +5,6 @@ import './Signup.css';
 import history from './../history';
 import img from "../loginPhoto.jpeg";
 import axios from 'axios';
-import bcrypt from 'bcryptjs';
 
 document.body.style = 'background: #74828F;';
 
@@ -31,7 +30,6 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [creditScore, setCreditScore] = useState(100);
     const [disabled, setDisabled] = useState(false);
 
     const onChangeFirstName = (e) => {
@@ -54,22 +52,18 @@ function Signup() {
         setConfirmPassword(e.target.value);
     }
 
-    const onChangeCreditScore = (e) => {
-        setCreditScore(e.target.value);
-    }
-
-    const onSubmit = async (e) =>  {
+    const onSubmit = (e) =>  {
         const user = {
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: confirmPassword,
-            creditScore: creditScore,
+            "roles": ["user"]
         }
 
         console.log(user);
 
-         axios.post('http://localhost:5000/users/add', user)
+        axios.post('http://localhost:5000/api/auth/signup', user)
             .then(res => console.log(res.data));
         
         alert("User Created");
