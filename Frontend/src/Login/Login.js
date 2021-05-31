@@ -52,7 +52,7 @@ function Login() {
                 window.location.reload();
             },
             error => {
-                alert("Try Again");
+                alert("Unable to log in. Try Again");
                 console.log("unable to login " + error);
                 history.push("/");
                 window.location.reload();

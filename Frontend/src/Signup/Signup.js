@@ -5,6 +5,7 @@ import './Signup.css';
 import history from './../history';
 import img from "../loginPhoto.jpeg";
 import axios from 'axios';
+import AuthService from "../services/auth.service";
 
 document.body.style = 'background: #74828F;';
 
@@ -63,10 +64,25 @@ function Signup() {
 
         console.log(user);
 
-        axios.post('http://localhost:5000/api/auth/signup', user)
-            .then(res => console.log(res.data));
+        AuthService.register(user.firstName, user.lastName, user.email, user.password, user.roles).then(
+            () => {
+                alert("Registering");
+                console.log(user.email + " has logged in");
+                history.push("/");
+                window.location.reload();
+            },
+            error => {
+                alert("Unable to register. Try Again");
+                console.log("Unable to register " + error);
+                history.push("/signup");
+                window.location.reload();
+            }
+        );
+
+        //axios.post('http://localhost:5000/api/auth/signup', user)
+        //    .then(res => console.log(res.data));
         
-        alert("User Created");
+        //alert("User Created");
     }
 
     const onFinish = (values) => {
