@@ -8,7 +8,7 @@ This is a gym booking web application built using react
 
 # Important
 
-Please clone our din branch instead of master. Thanks.
+Please clone our development branch instead of master. Thanks.
 
 ## Instruction to temporarily run the application
 
