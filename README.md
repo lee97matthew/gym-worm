@@ -1,3 +1,6 @@
+# IMPORTANT
+Please pull out din branch instead of master, thanks!
+
 # Gym Worm
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
