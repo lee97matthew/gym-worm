@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This is a gym booking web application built using react 
 
+# Important
+
+Please clone our din branch instead of master. Thanks.
+
 ## Instruction to temporarily run the application
 
 Once gym-worm repo is cloned, make sure you have nodejs installed \
