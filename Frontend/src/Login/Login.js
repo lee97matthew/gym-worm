@@ -75,7 +75,7 @@ function Login() {
             let lastAtPos = e.lastIndexOf('@');
             let lastDotPos = e.lastIndexOf('.');
 
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && e.indexOf('@@') == -1 && lastDotPos > 2 && (e.length - lastDotPos) > 2)) {
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && e.indexOf('@@') === -1 && lastDotPos > 2 && (e.length - lastDotPos) > 2)) {
                 return false; // invalid email
             } else {
                 return true; // valid email
