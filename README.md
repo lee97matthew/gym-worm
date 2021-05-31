@@ -14,7 +14,7 @@ cd Frontend\ , then run npm install and npm start
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-To launch the connection to the server, cd backend\ then run npm install and npm run start.\
+To launch the connection to the server, cd backend\ then run npm install and npm run start
 
 ### Note
 Only the register and signin pages are functional as of now.
