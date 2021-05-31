@@ -1,5 +1,5 @@
 # IMPORTANT
-Please pull out din branch instead of master, thanks!
+Please pull from development branch instead of master, thanks!!!
 
 # Gym Worm
 
