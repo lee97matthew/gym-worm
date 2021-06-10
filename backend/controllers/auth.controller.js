@@ -14,6 +14,7 @@ exports.signup = (req, res) => {
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
       creditScore: 100,
+      contactNo: req.body.contactNo,
       roles: req.body.roles
     });
     user.save((err, user) => {
@@ -113,6 +114,13 @@ exports.signup = (req, res) => {
           email: user.email,
           creditScore: user.creditScore,
           roles: authorities,
+          contactNotification: user.contactNotification,
+          emailNotification: user.emailNotification,
+          telegramNotification: user.telegramNotification,
+          contactNo: user.contactNo,
+          banStatus: user.banStatus,
+          banDuration: user.banDuration,
+          banStartDate: user.banStartDate,
           accessToken: token
         });
       });

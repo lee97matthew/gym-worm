@@ -27,8 +27,7 @@ class Information extends Component {
                         />
 
                         <Input style={{ borderRadius: 35, width: 500 }}
-                            placeholder=/*"Name"*/ {currentUser.firstName + " " + currentUser.lastName}
-                            //value= {currentUser.firstName + " " + currentUser.lastName}
+                            placeholder= {currentUser.firstName + " " + currentUser.lastName}
                             prefix={<UserOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Name">
@@ -66,6 +65,7 @@ class Information extends Component {
                             shape="round"
                             style={{ background: "#96c0ce", width: 200, border: "none", color: "red" }}
                             onClick={() => {
+                                AuthService.logout();
                                 history.push('/');
                                 window.location.reload(false);
                             }}

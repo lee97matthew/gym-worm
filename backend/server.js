@@ -25,24 +25,51 @@ const Role = db.role;
 
 // Opening connection to MongoDB
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useUnifiedTopology:true, useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
+  initial();
 })
   .catch(err => {
     console.error("Connection Error", err);
     process.exit();
-});
+  });
+
+function initial() {
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
+    }
+  });
+}
 
 // Initialize Routes
 //    -- old routes
-    const slotsRouter = require('./routes/slots');
-    const usersRouter = require('./routes/users');
+const slotsRouter = require('./routes/slots');
+const usersRouter = require('./routes/users');
 
-    app.use('/slots', slotsRouter); // Slots DB
-    app.use('/users', usersRouter); // Users DB
+app.use('/slots', slotsRouter); // Slots DB
+app.use('/users', usersRouter); // Users DB
 
 //    -- new routes
 app.get("/", (req, res) => {

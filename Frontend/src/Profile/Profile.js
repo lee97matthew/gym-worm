@@ -5,6 +5,7 @@ import Information from "./Information/Information";
 import Notif from "./Notif/Notif";
 import Navbar from '../components/Navbar/Navbar';
 
+
 const { Content, Sider } = Layout;
 
 class Profile extends Component {

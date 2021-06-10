@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import './Signup.css';
 import history from './../history';
 import img from "../loginPhoto.jpeg";
-import axios from 'axios';
+//import axios from 'axios';
 import AuthService from "../services/auth.service";
 
 document.body.style = 'background: #74828F;';
@@ -31,6 +31,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [contactNo, setContactNo] = useState('');
     const [disabled, setDisabled] = useState(false);
 
     const onChangeFirstName = (e) => {
@@ -52,6 +53,10 @@ function Signup() {
     const onChangeConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
     }
+    
+    const onChangeContactNo = (e) => {
+        setContactNo(e.target.value);
+    }
 
     const onSubmit = (e) =>  {
         const user = {
@@ -59,15 +64,16 @@ function Signup() {
             lastName: lastName,
             email: email,
             password: confirmPassword,
-            "roles": ["user"]
+            contactNo: contactNo,
+            roles: ["user"]
         }
 
         console.log(user);
 
-        AuthService.register(user.firstName, user.lastName, user.email, user.password, user.roles).then(
+        AuthService.register(user.firstName, user.lastName, user.email, user.password, user.contactNo, user.roles).then(
             () => {
                 alert("Registering");
-                console.log(user.email + " has logged in");
+                console.log(user.email + " has registered");
                 history.push("/");
                 window.location.reload();
             },
@@ -78,11 +84,6 @@ function Signup() {
                 window.location.reload();
             }
         );
-
-        //axios.post('http://localhost:5000/api/auth/signup', user)
-        //    .then(res => console.log(res.data));
-        
-        //alert("User Created");
     }
 
     const onFinish = (values) => {
@@ -96,10 +97,10 @@ function Signup() {
     };
 
     useEffect(() => {
-        if (firstName === ''  || lastName === '' || email === '' || password === '' ) {
+        if (firstName === ''  || lastName === '' || email === '' || password === '' || contactNo === '') {
             setDisabled(true);
         } else {
-            if (password.length < 6 || confirmPassword !== password) {
+            if (password.length < 6 || confirmPassword !== password || contactNo.length !== 8) {
                 setDisabled(true);
             } else {
                 setDisabled(false);
@@ -208,6 +209,27 @@ function Signup() {
                 style={{minWidth: 500}}
             >
                 <Input.Password onChange={onChangeConfirmPassword} value={confirmPassword}/>
+            </Form.Item>
+
+            <Form.Item
+                label="Contact Number"
+                name="contactNo"
+                min={8}
+                max={8}
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your contact number!',
+                    },
+                    {
+                        min: 8,
+                        max: 8,
+                        message: 'Your number should be 8 digits!'
+                    }
+                ]}
+                style={{minWidth: 500}}
+            >
+                <Input type="text" onChange={onChangeContactNo} value={contactNo}/>
             </Form.Item>
 
             <Form.Item {...tailLayout}>

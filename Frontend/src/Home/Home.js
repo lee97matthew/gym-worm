@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar/Navbar';
 import DisplayBookings from './DisplayBookings/DisplayBookings';
 import Credits from './Credits/Credits';
 import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 
 const { Header, Content } = Layout;
 document.body.style = 'background: #74828F;';
