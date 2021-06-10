@@ -37,7 +37,7 @@ class Information extends Component {
                         />
 
                         <Input style={{ borderRadius: 35, width: 500 }}
-                            placeholder=/*"Email"*/ {currentUser.email}
+                            placeholder= {currentUser.email}
                             prefix={<MailOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Email">
@@ -47,7 +47,7 @@ class Information extends Component {
                         />
 
                         <Input style={{ borderRadius: 35, width: 500 }}
-                            placeholder="Contact Number"
+                            placeholder= {currentUser.contactNo.substring(0,4) + " " + currentUser.contactNo.substring(4,8)}
                             prefix={<PhoneOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Contact Number">
