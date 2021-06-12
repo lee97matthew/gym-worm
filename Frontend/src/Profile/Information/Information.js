@@ -1,21 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Avatar, Image, Input, Tooltip, Row, Space, Button } from 'antd';
 import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import './Information.css';
 import history from "../../history";
 import AuthService from "../../services/auth.service";
 
-class Information extends Component {
-    constructor(props) {
-        super(props);
+function Information() {
+    const [currentUser] = useState(AuthService.getCurrentUser());
+    console.log(currentUser.firstName);
+    const [firstName, setFirstName] = useState(currentUser.firstName);
+    const [lastName, setLastName] = useState(currentUser.lastName);
+    const [email, setEmail] = useState(currentUser.email);
+    const [contactNo, setContactNo] = useState(currentUser.contactNo);
 
-        this.state = {
-            currentUser: AuthService.getCurrentUser()
-        };
+    const originalInfo = {
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        email: currentUser.email,
+        contactNo: currentUser.contactNo
     }
 
-    render() {
-        const { currentUser } = this.state;
+    const onChangeFirstName = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const onChangeLastName = (e) => {
+        setLastName(e.target.value);
+    }
+    
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+    }
+    
+    const onChangeContactNo = (e) => {
+        setContactNo(e.target.value);
+    }
+
+    const onUpdate = (e) => {
+        const user = {
+            firstName: firstName === undefined ? originalInfo.firstName : firstName ,
+            lastName: lastName === undefined ? originalInfo.lastName : lastName,
+            email: email === undefined ? originalInfo.email : email,
+            contactNo: contactNo === undefined ? originalInfo.contactNo : contactNo
+        }
+
+        console.log(user);
+
+        AuthService.update(user.firstName, user.lastName, user.email, user.contactNo).then(
+            () => {
+                alert("Updated");
+                window.location.reload();
+            },
+            error => {
+                alert("Unable to Update");
+                console.log("unable to update " + error);
+                window.location.reload();
+            }
+        );
+    }
 
         return (
             <div style={{ background: "74828F", alignItems: "center" }}>
@@ -27,7 +69,19 @@ class Information extends Component {
                         />
 
                         <Input style={{ borderRadius: 35, width: 500 }}
-                            placeholder= {currentUser.firstName + " " + currentUser.lastName}
+                            placeholder= {currentUser.firstName}
+                            onChange={onChangeFirstName}
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            suffix={
+                                <Tooltip title="Name">
+                                    <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                                </Tooltip>
+                            }
+                        />
+
+                        <Input style={{ borderRadius: 35, width: 500 }}
+                            placeholder= {currentUser.lastName}
+                            onChange={onChangeLastName}
                             prefix={<UserOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Name">
@@ -38,6 +92,7 @@ class Information extends Component {
 
                         <Input style={{ borderRadius: 35, width: 500 }}
                             placeholder= {currentUser.email}
+                            onChange={onChangeEmail}
                             prefix={<MailOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Email">
@@ -47,7 +102,8 @@ class Information extends Component {
                         />
 
                         <Input style={{ borderRadius: 35, width: 500 }}
-                            placeholder= {currentUser.contactNo.substring(0,4) + " " + currentUser.contactNo.substring(4,8)}
+                            placeholder= {currentUser.contactNo}//{currentUser.contactNo.substring(0,4) + " " + currentUser.contactNo.substring(4,8)}
+                            onChange={onChangeContactNo}
                             prefix={<PhoneOutlined className="site-form-item-icon" />}
                             suffix={
                                 <Tooltip title="Contact Number">
@@ -56,7 +112,15 @@ class Information extends Component {
                             }
                         />
 
-                        <Button type="primary" shape="round" style={{ background: "#96c0ce", width: 200, border: "none" }}>
+                        <Button 
+                            type="primary" 
+                            shape="round" 
+                            style={{ background: "#96c0ce", width: 200, border: "none" }}
+                            onClick={() => {
+                                onUpdate();
+                                //window.location.reload(false);
+                            }}
+                        >
                             Update
                         </Button>
 
@@ -76,7 +140,6 @@ class Information extends Component {
                 </Row>
             </div>
         )
-    }
 }
 
 export default Information;
