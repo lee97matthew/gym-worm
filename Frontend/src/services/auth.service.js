@@ -31,7 +31,6 @@ class AuthService {
         contactNo
       })
       .then(response => {
-        //alert(response.data.email);
         return response.data;
       })
   }
@@ -58,13 +57,45 @@ class AuthService {
         password
       })
       .then(response => {
-        //alert(response.data.accessToken);
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
 
         return response.data;
       });
+  }
+
+  updateEmailNotifications(email, emailNotification) {
+    return axios
+      .put(API_URL + 'update', {
+        email,
+        emailNotification
+      })
+      .then(response => {
+        return response.data;
+      })
+  }
+
+  updateSMSNotifications(email, contactNotification) {
+    return axios
+      .put(API_URL + 'update', {
+        email,
+        contactNotification
+      })
+      .then(response => {
+        return response.data;
+      })
+  }
+
+  updateTelegramNotifications(email, telegramNotification) {
+    return axios
+      .put(API_URL + 'update', {
+        email,
+        telegramNotification
+      })
+      .then(response => {
+        return response.data;
+      })
   }
 }
 

@@ -50,8 +50,6 @@ function Information() {
             .then(
                 (newUser) => {
                     alert("Updated");
-                    //alert(user.contactNo);
-                    //alert(user.firstName);
                     AuthService.updateCurrentUser(newUser.email, currentUser.password);
                     console.log("Successfully Updated");
                     window.location.reload();
@@ -78,7 +76,7 @@ function Information() {
                         onChange={onChangeFirstName}
                         prefix={<UserOutlined className="site-form-item-icon" />}
                         suffix={
-                            <Tooltip title="Name">
+                            <Tooltip title="First Name">
                                 <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                             </Tooltip>
                         }
@@ -89,7 +87,7 @@ function Information() {
                         onChange={onChangeLastName}
                         prefix={<UserOutlined className="site-form-item-icon" />}
                         suffix={
-                            <Tooltip title="Name">
+                            <Tooltip title="Last Name">
                                 <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                             </Tooltip>
                         }
@@ -97,6 +95,7 @@ function Information() {
 
                     <Input style={{ borderRadius: 35, width: 500 }}
                         placeholder={currentUser.email}
+                        value={currentUser.email}
                         onChange={onChangeEmail}
                         prefix={<MailOutlined className="site-form-item-icon" />}
                         suffix={

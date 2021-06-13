@@ -227,10 +227,12 @@ exports.updateSignin = (req, res) => {
       var authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
-        console.log(user.roles);
+        //console.log(user.roles);
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-      console.log(authorities);
+      //console.log(authorities);
+
+      console.log("Updated notifications for " + user.email);
 
       res.status(200).send({
         id: user._id,
