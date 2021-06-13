@@ -112,6 +112,7 @@ exports.signin = (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        password: user.password,
         creditScore: user.creditScore,
         roles: authorities,
         contactNotification: user.contactNotification,
@@ -135,7 +136,12 @@ exports.update = (req, res) => {
         res.status(500).send({ message: err });
         return;
       }
-
+      if (req.body.firstName !== undefined) {
+        user.firstName = req.body.firstName
+      }
+      if (req.body.lastName !== undefined) {
+        user.lastName = req.body.lastName
+      }
       if (req.body.emailNotification !== undefined) {
         user.emailNotification = req.body.emailNotification
       }
@@ -182,8 +188,66 @@ exports.update = (req, res) => {
       if (req.body.roles !== undefined) {
         user.banStartDate = req.body.roles
       }
-      user.save()
-        .then(() => res.json('User Updated!'))
-        .catch(err =>   s.status(400).json('Error: ' + err))
+      user.save((err, newUser) => {
+        if (err) {
+          return res.status(400).send({ message: err })
+        }
+        return res.send(newUser);
+      });
+    });
+};
+
+exports.updateSignin = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  })
+    .populate("roles", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found." });
+      }
+
+
+      if (req.body.password !== user.password) {
+        return res.status(401).send({
+          accessToken: null,
+          message: "Invalid Password!"
+        });
+      }
+
+      var token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: 86400 // 24 hours
+      });
+
+      var authorities = [];
+
+      for (let i = 0; i < user.roles.length; i++) {
+        console.log(user.roles);
+        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+      }
+      console.log(authorities);
+
+      res.status(200).send({
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        creditScore: user.creditScore,
+        roles: authorities,
+        contactNotification: user.contactNotification,
+        emailNotification: user.emailNotification,
+        telegramNotification: user.telegramNotification,
+        contactNo: user.contactNo,
+        banStatus: user.banStatus,
+        banDuration: user.banDuration,
+        banStartDate: user.banStartDate,
+        accessToken: token
+      });
     });
 };

@@ -21,28 +21,50 @@ class AuthService {
   logout() {
     localStorage.removeItem("user");
   }
-  
-  update(firstName, lastName, email, contactNo) {
-    return axios.put(API_URL + 'update', {
-      firstName,
-      lastName,
-      email,
-      contactNo
-    })
+
+  updateInfo(firstName, lastName, email, contactNo) {
+    return axios
+      .put(API_URL + 'update', {
+        firstName,
+        lastName,
+        email,
+        contactNo
+      })
+      .then(response => {
+        //alert(response.data.email);
+        return response.data;
+      })
   }
 
   register(firstName, lastName, email, password, contactNo) {
-    return axios.post(API_URL + "signup", {
-      firstName,
-      lastName,
-      email,
-      password,
-      contactNo
-    });
+    return axios
+      .post(API_URL + "signup", {
+        firstName,
+        lastName,
+        email,
+        password,
+        contactNo
+      });
   }
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user'));;
+  }
+
+  updateCurrentUser(email, password) {
+    return axios
+      .post(API_URL + "updateSignin", {
+        email,
+        password
+      })
+      .then(response => {
+        //alert(response.data.accessToken);
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+
+        return response.data;
+      });
   }
 }
 
