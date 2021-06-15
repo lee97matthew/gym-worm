@@ -13,11 +13,13 @@ router.route('/add').post((req, res) => {
   const date = Date.parse(req.body.date);
   const startTime = Number(req.body.startTime);
   const capacity = Number(req.body.capacity);
+  const fullCapacity = Number(req.body.capacity);
 
   const newSlot= new Slot({
       date,
       startTime,
       capacity,
+      fullCapacity
     });
 
   newSlot.save()

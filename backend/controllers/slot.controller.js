@@ -15,7 +15,7 @@ exports.fetchSlots = (req, res) => {
         return res.status(500).send({ message: err });
       }
 
-      if (!slots) {
+      if (slots.length === 0) {
         return res.status(404).send({ message: "Slots not found." });
       }
 
