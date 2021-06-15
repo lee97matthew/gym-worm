@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import {  Button, Space, Row, DatePicker, TimePicker, Select } from 'antd';
+import { Button, Space, Row, DatePicker, TimePicker, Select } from 'antd';
+import { Card } from 'antd';
 import 'antd/dist/antd.css';
 import './Bookings.css'
+import SlotService from "../services/slot.service";
+
 
 const { Option } = Select;
 
@@ -11,19 +14,21 @@ function PickerWithType({ type, onChange }) {
     if (type === 'date') return <DatePicker onChange={onChange} />;
     return <DatePicker picker={type} onChange={onChange} />;
 }
-  
+
 
 function Bookings() {
     const [type, setType] = useState('time');
+    const [slots] = useState(SlotService.fetchSlots());
+    console.log(slots);
 
-    return(
+    return (
         <div style={{ background: "74828F", alignItems: "center" }}>
-            <Navbar/>
-            <Row justify="center"  direction="vertical">
-                <Space 
-                    style={{ background: "74828F", alignItems: "center" }} 
-                    direction="vertical" 
-                    size={'large'} 
+            <Navbar />
+            <Row justify="center" direction="vertical">
+                <Space
+                    style={{ background: "74828F", alignItems: "center" }}
+                    direction="vertical"
+                    size={'large'}
                     align='center'
                 >
                     <text className="booking">Make Bookings</text>
@@ -37,9 +42,9 @@ function Bookings() {
                     <Button
                         type="primary"
                         shape="round"
-                        style={{ background: "#525564", width: 500, height:50, fontSize: 25,border: "none", color: "#white" }}
+                        style={{ background: "#525564", width: 500, height: 50, fontSize: 25, border: "none", color: "#white" }}
                         onClick={() => {
-                            
+
                             //window.location.reload(false);
                         }}
                     >
@@ -47,6 +52,11 @@ function Bookings() {
                     </Button>
                 </Space>
             </Row>
+
+            <Card className='bookingStyle'>
+                <p className='text'>testing</p>
+            </Card>
+
         </div>
     )
 }

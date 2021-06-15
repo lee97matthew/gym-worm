@@ -6,7 +6,8 @@ const slotSchema = new Schema({
   date: { type: Date, required: true },
   startTime: { type: Number, required: true },
   capacity: { type: Number, required: true, minlength: 0 },
-  waitList: { type: Array, required: false },
+  waitList: [{ type: Schema.Types.ObjectId, ref: 'User', required: false }],
+  //waitList: { type: Array, required: false },
 }, {
   timestamps: true,
 });

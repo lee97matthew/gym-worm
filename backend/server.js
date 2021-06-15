@@ -66,10 +66,10 @@ function initial() {
 // Initialize Routes
 //    -- old routes
 const slotsRouter = require('./routes/slots');
-const usersRouter = require('./routes/users');
+//const usersRouter = require('./routes/users');
 
 app.use('/slots', slotsRouter); // Slots DB
-app.use('/users', usersRouter); // Users DB
+//app.use('/users', usersRouter); // Users DB
 
 //    -- new routes
 app.get("/", (req, res) => {
@@ -78,6 +78,7 @@ app.get("/", (req, res) => {
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/slot.routes')(app);
 
 // Error handling, disable for now
 /*app.use(function (err, req, res, next) {
