@@ -43,7 +43,7 @@ function Login() {
         }
 
         console.log(user);
-
+        
         AuthService.login(user.email, user.password).then(
             () => {
                 alert("Logging In");

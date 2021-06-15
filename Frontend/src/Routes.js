@@ -10,6 +10,7 @@ import Profile from "./Profile/Profile";
 import history from "./history";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
+import MakeBookings from "./Bookings/MakeBookings"
 //import BoardUser from "./components/board-user.component";
 //import BoardAdmin from "./components/board-admin.component";
 
@@ -50,6 +51,7 @@ class Routes extends Component {
                     <Route path="/Bookings" component={Bookings} />
                     <Route path="/Profile" component={Profile} />
                     <Route path="/Signup" component={Signup} />
+                    <Route path="/MakeBookings" component={MakeBookings} />
                 </Switch>
             </BrowserRouter>
         )
