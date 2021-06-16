@@ -24,7 +24,6 @@ exports.fetchSlots = (req, res) => {
       res.status(200).send({
         slots
       });
-
     });
 
   //return res.status(405).send("help")

@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import { Button, Space, Row, DatePicker, TimePicker, Select } from 'antd';
-import { Card } from 'antd';
+import { Button, Space, Row, DatePicker } from 'antd';
 import 'antd/dist/antd.css';
 import './Bookings.css'
 import SlotService from "../services/slot.service";
-
-
-const { Option } = Select;
-
-function PickerWithType({ type, onChange }) {
-    if (type === 'time') return <TimePicker onChange={onChange} />;
-    if (type === 'date') return <DatePicker onChange={onChange} />;
-    return <DatePicker picker={type} onChange={onChange} />;
-}
-
+import moment from 'moment';
 
 function Bookings() {
-    const [type, setType] = useState('time');
-    const [slots] = useState(SlotService.fetchSlots());
-    console.log(slots);
+    const dateFormat = "YYYY-MM-DD";
+    const date = useRef(moment().format(dateFormat));
+    const today = moment();
+    const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
+    console.log(SlotService.fetchSlots({"date" : "2021-05-30"}));
+
+    function onChangeDate(theDate, dateString) {
+        date.current = dateString;
+        setSlots(SlotService.fetchSlots("2021-05-30"))
+        console.log(slots)
+        console.log(date.current);
+    }
+    
+    useEffect(() => {
+        console.log('the age has changed', date)
+    }, [date])
 
     return (
         <div style={{ background: "74828F", alignItems: "center" }}>
@@ -33,11 +36,11 @@ function Bookings() {
                 >
                     <text className="booking">Make Bookings</text>
                     <Space>
-                        <Select value={type} onChange={setType}>
-                            <Option value="time">Time</Option>
-                            <Option value="date">Date</Option>
-                        </Select>
-                        <PickerWithType type={type} onChange={value => console.log(value)} />
+                        <DatePicker
+                            defaultValue={today}
+                            //format={dateFormat}
+                            onChange={onChangeDate}  
+                        />
                     </Space>
                     <Button
                         type="primary"
@@ -52,11 +55,6 @@ function Bookings() {
                     </Button>
                 </Space>
             </Row>
-
-            <Card className='bookingStyle'>
-                <p className='text'>testing</p>
-            </Card>
-
         </div>
     )
 }
