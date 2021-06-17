@@ -9,5 +9,5 @@ module.exports = function (app) {
         next();
     });
 
-    app.get("/api/slot/fetchSlots", controller.fetchSlots);
+    app.post("/api/slot/fetchSlots", controller.fetchSlots);
 };
