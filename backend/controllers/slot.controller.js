@@ -3,16 +3,19 @@ const User = db.user;
 const Slot = db.slot;
 
 exports.fetchSlots = (req, res) => {
-  console.log("looking for " + req.body.date);
-  const dateFix = req.body.date + "T00:00:00.000Z";
+  if (req) {
+    console.log("exist");
+  }
+  console.log(req.body.currentDate);
+
+  //const dateFix = req.body.date + "T00:00:00.000Z";
 
   Slot.find({
-    date: dateFix
+    date: req.body.currentDate
   })
-    //.populate("date")
     .exec((err, slots) => {
       if (err) {
-        return res.status(500).send({ message: err });
+        return res.status(500).send({ message: req });
       }
 
       if (slots.length === 0) {
@@ -21,8 +24,8 @@ exports.fetchSlots = (req, res) => {
 
       console.log(slots);
 
-      res.status(200).send({
-        slots
+      return res.status(200).send({
+        getSlots: slots
       });
     });
 

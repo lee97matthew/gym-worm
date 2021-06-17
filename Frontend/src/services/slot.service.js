@@ -3,20 +3,25 @@ import axios from "axios";
 const API_URL = "http://localhost:5000/api/slot/";
 
 class SlotService {
-    async fetchSlots(date) {
+    async fetchSlots(currentDate) {
         return await axios
-            .post(API_URL + "fetchSlots",{
-                date
+            .post(API_URL + "fetchSlots", {
+                currentDate
             })
             .then(response => {
+                if (response.data.getSlots) {
+                    localStorage.setItem(JSON.stringify(currentDate), JSON.stringify(response.data.getSlots));
+                }
                 return response.data;
             });
+    }
 
-        /*const response = await axios
-            .post(API_URL + "fetchSlots", {
-                date
-            });
-        return response.data;*/
+    getCurrentSlots(currentDate) {
+        return JSON.parse(localStorage.getItem(JSON.stringify(currentDate)));
+    }
+
+    clearCurrentSlots(currentDate) {
+        localStorage.removeItem(JSON.stringify(currentDate));
     }
 }
 
