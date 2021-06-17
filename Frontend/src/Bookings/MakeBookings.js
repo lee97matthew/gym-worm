@@ -8,46 +8,65 @@ import SlotService from "../services/slot.service";
 import moment from 'moment';
 import history from './../history';
 
-import { Avatar, Image, Input, Tooltip } from 'antd';
-import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { Avatar, Image, Input, Tooltip } from 'antd';   // these are for testing, can remove later
+import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';      // these are for testing, can remove later
 
 
-function Bookings() {
+
+function MakeBookings() {
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat));
     const today = moment();
-    //const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
-    const [slots, setSlots] = useState(SlotService.getCurrentSlots(JSON.stringify(today)) || []);
-    alert(slots.length + " slots");
 
+    const todayDate = JSON.stringify(new Date()).substring(1, 11);
+
+    const [slots, setSlots] = useState([]);
+
+    if (slots.length === 0) {
+        SlotService.fetchSlots(todayDate).then(
+            () => {
+                console.log("finding slots for " + todayDate);
+                setSlots(SlotService.getCurrentSlots(todayDate));
+            },
+            error => {
+                console.log("cant find slot " + todayDate + " " + error);
+             }
+        );
+    }
+
+    //const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
+    //const [slots, setSlots] = useState(SlotService.getCurrentSlots(JSON.stringify(today)) || []);
     function onChangeDate(theDate, dateString) {
         date.current = JSON.parse(JSON.stringify(dateString));
         console.log("date is " + date.current);
 
         const checkDate = {
-            currentDate : date.current,
+            currentDate: date.current,
         }
 
-        console.log("date is " + checkDate); 
-
-        console.log("slots are " + slots); 
+        console.log("date is " + checkDate);
+        console.log("slots are " + slots);
 
         SlotService.fetchSlots(checkDate.currentDate).then(
-            (res) => {
+            () => {
                 console.log("finding slots for " + date.current);
                 setSlots(SlotService.getCurrentSlots(checkDate.currentDate));
             },
             error => {
-                console.log("cant find slot " + date.current + " " + error); 
-                //history.push("/Bookings");
-                //window.location.reload();
+                console.log("cant find slot for " + date.current + " " + error);
+                alert("No slots that day");
             }
         );
-        console.log("after slots are " + slots); 
-        
     }
 
-    useEffect(() => {
+    function getLength() {      // these are for testing, can remove later
+        if (slots.length !== 0) {
+            return slots.length;
+        }
+        return 0;
+    }
+
+    useEffect(() => {       // not sure what this does
         console.log('the age has changed', date)
     }, [date])
 
@@ -80,8 +99,11 @@ function Bookings() {
                     >
                         Confirm Booking
                     </Button>
+
+                    {/*hello u can ignore these below, im just testing the retrieving*/}
+
                     <Input style={{ borderRadius: 35, width: 500 }}
-                        placeholder={ "number of slots for this day is " + slots.length } 
+                        placeholder={"number of slots for this day is " + getLength()}
                         prefix={<UserOutlined className="site-form-item-icon" />}
                         suffix={
                             <Tooltip title="Last Name">
@@ -95,4 +117,4 @@ function Bookings() {
     )
 }
 
-export default Bookings;
+export default MakeBookings;
