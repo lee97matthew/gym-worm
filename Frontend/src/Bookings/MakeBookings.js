@@ -8,14 +8,14 @@ import moment from 'moment';
 
 function Bookings() {
     const dateFormat = "YYYY-MM-DD";
-    const date = useRef(moment().format(dateFormat));
+    const date = useRef(moment().format(dateFormat).toString());
     const today = moment();
     const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
-    console.log(SlotService.fetchSlots({"date" : "2021-05-30"}));
+    console.log(SlotService.fetchSlots({ "date" : "2021-05-30"}));
 
     function onChangeDate(theDate, dateString) {
         date.current = dateString;
-        setSlots(SlotService.fetchSlots("2021-05-30"))
+        setSlots(SlotService.fetchSlots(dateString))
         console.log(slots)
         console.log(date.current);
     }
