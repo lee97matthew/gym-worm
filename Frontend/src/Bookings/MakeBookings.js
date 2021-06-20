@@ -13,6 +13,8 @@ import Display from "./DisplayBookings"
 
 
 function MakeBookings() {
+    const [slotsAvail, setSlotAvail] = useState(false)
+
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat).toString());
     const today = moment();
@@ -50,10 +52,12 @@ function MakeBookings() {
             () => {
                 console.log("finding slots for " + date.current);
                 setSlots(SlotService.getCurrentSlots(checkDate.currentDate));
+                setSlotAvail(true)
             },
             error => {
                 console.log("cant find slot for " + date.current + " " + error);
                 alert("No slots that day");
+                setSlotAvail(false)
             }
         );
     }
@@ -81,7 +85,7 @@ function MakeBookings() {
                 >
                     <text className="booking">Make Bookings</text>
                     {
-                        slots.length === 0 ? <Row/> : slots.capacity === 0 ? <Row/> : <Display slots={slots}/>  
+                        slotsAvail ? <Display slots={slots}/>  : <Row/>   
                     }
                     <Space>
                         <DatePicker

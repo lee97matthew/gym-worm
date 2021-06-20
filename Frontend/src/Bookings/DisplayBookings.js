@@ -12,12 +12,12 @@ function DisplayBookings(props) {
     }
 
     const BookingsCard = (slots) => {
-        const [isChecked, setChecked] = useState(false);
+        //const [isChecked, setChecked] = useState(false);
         console.log(slots.date.slice(0,10));
         count = count - 1;
         function onChange(e) {
             console.log(`checked = ${e.target.checked}`);
-            setChecked(e.target.checked);
+            //setChecked(e.target.checked);
         }
     
         return(
