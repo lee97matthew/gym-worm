@@ -9,7 +9,6 @@ const slotSchema = new Schema({
   fullCapacity: { type: Number, required: true, minlength: 0 },
   userList: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
   waitList: [{ type: Schema.Types.ObjectId, ref: 'User', required: false }],
-  //waitList: { type: Array, required: false },
 }, {
   timestamps: true,
 });

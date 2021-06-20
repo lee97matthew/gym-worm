@@ -29,5 +29,38 @@ exports.fetchSlots = (req, res) => {
       });
     });
 
-  //return res.status(405).send("help")
+};
+
+exports.bookSlot = (req, res) => {
+  if (req) {
+    console.log("exist");
+  }
+  console.log(req.body.slotID);
+  console.log(req.body.userID + " " + req.body.email);
+  Slot.findOne({ _id: req.body.slotID }, (err, slot) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    console.log("userList is " + slot.userList);
+    console.log("userID is " + req.body.userID);
+
+    slot.userList.push(req.body.userID);
+
+    if (slot.capacity > 0) {
+      slot.capacity--;
+    } else { // add in wait list later on
+      return res.status(400).send({ message: "Slot is already full" });
+    }
+
+    // need to add slot to the user's bookings array 
+
+    slot.save((err, updatedSlot) => {
+      if (err) {
+        return res.status(400).send({ message: err })
+      }
+      console.log("Slot is successfully booked");
+      return res.send(updatedSlot);
+    });
+  });
 };
