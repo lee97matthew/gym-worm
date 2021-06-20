@@ -5,7 +5,6 @@ function DisplayBookings(props) {
     const len = props.slots.length;
     var count = 0;
     const arr = [];
-    console.log(props.slots[1].date.toString().slice(0,10));
     const [container, setContainer] = useState(null);
 
     const Time = (time) => {
