@@ -1,16 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import { Button, Space, Row, DatePicker } from 'antd';
-
 import 'antd/dist/antd.css';
 import './Bookings.css'
 import SlotService from "../services/slot.service";
 import moment from 'moment';
 import history from './../history';
-
-import { Avatar, Image, Input, Tooltip } from 'antd';
-import { InfoCircleOutlined, UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-
+import 'react-calendar-heatmap/dist/styles.css';
+import { Input, Tooltip } from 'antd';
+import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import Display from "./DisplayBookings"
 
 function Bookings() {
     const dateFormat = "YYYY-MM-DD";
@@ -19,18 +18,17 @@ function Bookings() {
     //const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
     const [slots, setSlots] = useState(SlotService.getCurrentSlots(JSON.stringify(today)) || []);
     alert(slots.length + " slots");
-
+    console.log("slots are " + slots); 
     function onChangeDate(theDate, dateString) {
         date.current = JSON.parse(JSON.stringify(dateString));
-        console.log("date is " + date.current);
+        console.log("date is " + date.current.toString());
 
         const checkDate = {
             currentDate : date.current,
         }
 
         console.log("date is " + checkDate); 
-
-        console.log("slots are " + slots); 
+        console.log("slots are " + slots.getSlots); 
 
         SlotService.fetchSlots(checkDate.currentDate).then(
             (res) => {
@@ -62,10 +60,12 @@ function Bookings() {
                     align='center'
                 >
                     <text className="booking">Make Bookings</text>
+                    {
+                        slots.length === 0 ? <Row/> : slots.capacity === 0 ? <Row/> : <Display slots={slots}/>  
+                    }
                     <Space>
                         <DatePicker
                             defaultValue={today}
-                            //format={dateFormat}
                             onChange={onChangeDate}
                         />
                     </Space>
