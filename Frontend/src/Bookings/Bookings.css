@@ -6,7 +6,7 @@
 
 .bookingStyle {
     background: #96c0ce;
-    width: 500px;
+    width: 600px;
     height: 50px;
     border-radius: 50px;
     font-size: 1.2rem;
@@ -32,5 +32,5 @@
 .ant-checkbox{
     background-color: transparent;
     top: -7px;
-    left: 50px
+    left: 75px
 } 

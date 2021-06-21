@@ -26,7 +26,7 @@ function DisplayBookings(props) {
                     <Card className='bookingStyle'>
                         <Row gutter={10}>
                         <Col span={15} style={{ padding: '8px 0' }} wrap="false">
-                            <p className='text'>{`Date: ${slots.date.slice(0,10)} Time: ${Time(slots.startTime)}`}</p>
+                            <p className='text'>{`Date: ${slots.date.slice(0,10)} Time: ${Time(slots.startTime)} Capacity: ${slots.capacity}`}</p>
                         </Col>
                         <Col span={5}>
                             <Checkbox className="ant-checkbox" onChange={onChange}/>

@@ -123,7 +123,8 @@ exports.signin = (req, res) => {
         banStatus: user.banStatus,
         banDuration: user.banDuration,
         banStartDate: user.banStartDate,
-        accessToken: token
+        accessToken: token,
+        bookings: user.bookings
       });
     });
 };
@@ -171,9 +172,11 @@ exports.update = (req, res) => {
         }
         user.password = bcrypt.hashSync(req.body.password, 8)
       }
-      if (req.body.bookings !== undefined) {
-        user.bookings = req.body.bookings
+
+      if (req.body.bookingID !== undefined) {
+        user.bookings.push(req.body.bookingID)
       }
+
       if (req.body.banStatus !== undefined) {
         user.banStatus = req.body.banStatus
       }
@@ -251,6 +254,29 @@ exports.updateSignin = (req, res) => {
         banDuration: user.banDuration,
         banStartDate: user.banStartDate,
         accessToken: token
+      });
+    });
+};
+
+exports.cancelBooking = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  })
+    .exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+
+      if (req.body.bookingID  !== undefined) {
+        user.bookings.pull({_id: req.body.bookingID});
+      }
+
+      user.save((err, newUser) => {
+        if (err) {
+          return res.status(400).send({ message: err })
+        }
+        return res.status(200).send(newUser);
       });
     });
 };

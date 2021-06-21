@@ -35,6 +35,28 @@ class AuthService {
       })
   }
 
+  updateBooking(email, bookingID) {
+    return axios
+      .put(API_URL + 'update', {
+        email,
+        bookingID
+      })
+      .then(response => {
+        return response.data;
+      })
+  }
+
+  cancelBooking(email, bookingID) {
+    return axios
+      .put(API_URL + 'cancelBooking', {
+        email,
+        bookingID
+      })
+      .then(response => {
+        return response.data;
+      })
+  }
+
   register(firstName, lastName, email, password, contactNo) {
     return axios
       .post(API_URL + "signup", {

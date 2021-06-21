@@ -1,8 +1,36 @@
 import axios from "axios";
+import AuthService from "./auth.service";
+
 
 const API_URL = "http://localhost:5000/api/slot/";
 
 class SlotService {
+    async createSlot(date, startTime, capacity) {
+        return await axios
+            .post(API_URL + "createSlot", {
+                date,
+                startTime,
+                capacity
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    async updateSlot(slotID, date, startTime, capacity, fullCapacity) {
+        return await axios
+            .put(API_URL + "updateSlot", {
+                slotID,
+                date,
+                startTime,
+                capacity,
+                fullCapacity,
+            })
+            .then(response => {
+                return response.data;
+            });
+    }
+
     async fetchSlots(currentDate) {
         return await axios
             .post(API_URL + "fetchSlots", {
@@ -25,15 +53,34 @@ class SlotService {
     }
 
     async bookSlot(slotID, userID, userEmail) { // use this command -> SlotService.bookSlot(currentSlot.id, currentUser.id, currentUser.email)
-        return await axios.post(API_URL + "bookSlot", {
-                slotID,
-                userID,
-                userEmail
+        await axios.post(API_URL + "bookSlot", {
+            slotID,
+            userID,
+            userEmail
+        })
+            .then(updatedSlot => {
+                return updatedSlot.data;
             })
-            .then(response => {
-                return response.data;
+    }
+
+    async recordBooking(slotID, userID) {
+        return await axios.post(API_URL + "recordBooking", {
+            slotID,
+            userID
+        })
+            .then(booking => {
+                return booking.data;
             })
-        // need to create booking record
+    }
+
+    async cancelledBooking(slotID, userID) {
+        return await axios.put(API_URL + "cancelledBooking", {
+            slotID,
+            userID
+        })
+            .then(booking => {
+                return booking.data;
+            })
     }
 }
 

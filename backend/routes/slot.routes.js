@@ -9,10 +9,15 @@ module.exports = function (app) {
         next();
     });
 
+    app.post("/api/slot/createSlot", controller.createSlot);
+
+    app.put("/api/slot/updateSlot", controller.updateSlot);
+
     app.post("/api/slot/fetchSlots", controller.fetchSlots);
 
     app.post("/api/slot/bookSlot", controller.bookSlot);
 
-    //app.post("/api/slot/bookSlot", controller.recordBooking); 
+    app.post("/api/slot/recordBooking", controller.recordBooking); 
 
+    app.put("/api/slot/cancelledBooking", controller.cancelledBooking); 
 };

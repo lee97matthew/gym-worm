@@ -11,6 +11,22 @@ import { Input, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import Display from "./DisplayBookings"
 
+// const booking = { bookingID: undefined }
+
+// Step 1 : When a slot is selected, and user is logged in, pass in this 3 variables to update the slot's userList and capacity.
+// SlotService.bookSlot(currentSlot.id, currentUser.id, currentUser.email)
+
+// Step 2 : After updating the slot, we need to create the booking record. Need to pass in the same slot id and same user id. 
+//          It will create a new booking object and save the id into const booking
+// SlotService.recordBooking(currentSlot.id, currentUser.id).then(newBooking => { booking.bookingID = newBooking.id })
+
+// Step 3 : We then have to update the user's bookings. Pass in the user's email and booking id
+// AuthService.updateBooking(currentUser.email, booking.bookingID).then( follow information page's updateCurrentUser(currentUser.email, currentUser.password) ). etc etc
+
+
+// to Delete booking from user,
+// AuthService.cancelBooking(currentUser.email, booking.bookingID)
+// SlotService.cancalledBooking(currentSlot.id, currentUser.id)
 
 function MakeBookings() {
     const [slotsAvail, setSlotAvail] = useState(false)

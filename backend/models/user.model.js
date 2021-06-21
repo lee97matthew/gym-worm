@@ -11,7 +11,7 @@ const userSchema = new Schema({
   contactNotification: { type: Boolean, required: true, default: true },
   emailNotification: { type: Boolean, required: true, default: true },
   creditScore: { type: Number, required: true, default: 100 },
-  bookings: [{ type: Schema.Types.ObjectId, ref: 'Slot', required: false }],
+  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking', required: false }],
   banStatus: { type: Boolean, required: true, default: false },
   banDuration: { type: Number, required: true, default: 0 },
   banStartDate: { type: Date, required: true, default: Date.now },

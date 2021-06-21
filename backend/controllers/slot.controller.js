@@ -1,10 +1,69 @@
 const db = require("../models");
 const User = db.user;
 const Slot = db.slot;
+const Booking = db.booking;
+//const { SlotService } = require("../../Frontend/services/slot.service");
+//const AuthService = require("../routes/auth.routes");
+
+exports.createSlot = (req, res) => {
+  if (req) {
+    console.log("createSlot req exist");
+  }
+
+  const date = Date.parse(req.body.date);
+  const startTime = Number(req.body.startTime);
+  const capacity = Number(req.body.capacity);
+  const fullCapacity = Number(req.body.capacity);
+
+  const newSlot = new Slot({
+    date,
+    startTime,
+    capacity,
+    fullCapacity
+  });
+
+  newSlot.save()
+    .then(() => res.send({message: 'Slot Created!'}))
+    .catch(err => res.status(500).json('Error: ' + err));
+}
+
+exports.updateSlot = (req, res) => {
+  if (req) {
+    console.log("updateSlot req exist");
+  }
+
+  Slot.findOne({ _id: req.body.slotID }, (err, slot) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if (req.body.startTime !== undefined) {
+      slot.startTime = req.body.startTime
+    }
+    if (req.body.capacity !== undefined) {
+      slot.capacity = req.body.capacity
+    }
+    if (req.body.fullCapacity !== undefined) {
+      slot.fullCapacity = req.body.fullCapacity
+    }
+    if (req.body.date !== undefined) {
+      slot.date = Date.parse(req.body.date)
+    }
+
+    slot.save((err, updatedSlot) => {
+      if (err) {
+        return res.status(400).send({ message: err })
+      }
+      console.log("Slot is successful updated");
+      return res.send(updatedSlot);
+    });
+  });
+}
 
 exports.fetchSlots = (req, res) => {
   if (req) {
-    console.log("exist");
+    console.log("fetchSlots req exist");
   }
   console.log(req.body.currentDate);
 
@@ -33,17 +92,18 @@ exports.fetchSlots = (req, res) => {
 
 exports.bookSlot = (req, res) => {
   if (req) {
-    console.log("exist");
+    console.log("bookSlot req exist");
   }
-  console.log(req.body.slotID);
-  console.log(req.body.userID + " " + req.body.email);
+  console.log("slot id " + req.body.slotID);
+  console.log("user id " + req.body.userID + " user email " + req.body.userEmail);
   Slot.findOne({ _id: req.body.slotID }, (err, slot) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-    console.log("userList is " + slot.userList);
-    console.log("userID is " + req.body.userID);
+
+    //console.log("userList is " + slot.userList);
+    //console.log("userID is " + req.body.userID);
 
     slot.userList.push(req.body.userID);
 
@@ -53,13 +113,61 @@ exports.bookSlot = (req, res) => {
       return res.status(400).send({ message: "Slot is already full" });
     }
 
-    // need to add slot to the user's bookings array 
+    slot.save((err, updatedSlot) => {
+      if (err) {
+        return res.status(400).send({ message: err })
+      }
+      console.log("Slot booking is successful");
+      return res.send(updatedSlot);
+    });
+  });
+};
+
+exports.recordBooking = (req, res) => {
+  if (req) {
+    console.log("recordBooking req exist");
+  }
+  console.log("slot id " + req.body.slotID);
+  console.log("user id " + req.body.userID);
+
+  const newBooking = new Booking({
+    user: req.body.userID,
+    slot: req.body.slotID,
+    dateOfBooking: new Date()
+  });
+
+  newBooking.save((err, booking) => {
+    if (err) {
+      return res.status(400).send({ message: err })
+    }
+    console.log("Booking is successfully recorded");
+    return res.send(booking);
+  });
+};
+
+exports.cancelledBooking = (req, res) => {
+  if (req) {
+    console.log("cancelledSlot req exist");
+  }
+  console.log("slot id " + req.body.slotID);
+  console.log("user id " + req.body.userID);
+  Slot.findOne({ _id: req.body.slotID }, (err, slot) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    slot.userList.pull({ _id: req.body.userID });
+
+
+    slot.capacity++;
+
 
     slot.save((err, updatedSlot) => {
       if (err) {
         return res.status(400).send({ message: err })
       }
-      console.log("Slot is successfully booked");
+      console.log("Slot cancellation and update is successful");
       return res.send(updatedSlot);
     });
   });

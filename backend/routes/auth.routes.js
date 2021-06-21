@@ -24,4 +24,6 @@ module.exports = function (app) {
     app.put("/api/auth/update", controller.update);
 
     app.post("/api/auth/updateSignin", controller.updateSignin);
+
+    app.put("/api/auth/cancelBooking", controller.cancelBooking);
 };
