@@ -1,45 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useRef} from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import { Breadcrumb, Button, Space, Col, Row, Card, Checkbox } from 'antd';
 import history from "../history";
 import 'antd/dist/antd.css';
-import './Bookings.css';
+import './Bookings.css'
 import AuthService from "../services/auth.service";
 
-const currentUser = AuthService.getCurrentUser();
+function Bookings() {
+    const [container, setContainer] = useState(null);
+    const currentUser = AuthService.getCurrentUser()
+    const arrSlots = []
+    var cancelSlots =[]
+    console.log(currentUser)
 
-    if (!currentUser) {
-        history.push('/');
-        //window.location.reload();
-    }
+    function DisplayBookings(props) {
+        const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
 
-function DisplayBookings() {
-    const [isChecked, setChecked] = useState(false);
-
-    function onChange(e) {
-        console.log(`checked = ${e.target.checked}`);
-        setChecked(e.target.checked);
-    }
-
-    return(
-        <div>
+        const onChange = (e) => {
+            isChecked.current = [e.target.checked, props.slot.date.slice(0,10), props.slot.startTime];
+            console.log(isChecked);
+            if (isChecked.current[0]) {
+                cancelSlots.push(props.slot)
+            } else {
+                if (cancelSlots.length !== 0) {
+                    cancelSlots = cancelSlots.filter(element => element !== props.slot)
+                }
+            }
+            console.log(cancelSlots)
+        }
+    
+        const Time = (time) => {
+            return time <= 12 ? `${time}am` : `${time - 12}pm`
+        }
+        
+        return(
+            <div>
                 <Card className='bookingStyle'>
                     <Row gutter={10}>
                     <Col span={15} style={{ padding: '8px 0' }} wrap="false">
-                        <p className='text'>13 Feb 2021</p>
+                        <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
                     </Col>
                     <Col span={5}>
                         <Checkbox className="ant-checkbox" onChange={onChange}/>
                     </Col>
                     </Row>
                 </Card>
-            
-        </div>
-    )
-}
-
-function Bookings() {
-    const [container, setContainer] = useState(null);
+                    
+            </div>
+        );
+    }
 
     return(
         <div style={{ background: "74828F", alignItems: "center" }}>
@@ -59,11 +68,7 @@ function Bookings() {
                             direction="vertical" size={'small'} 
                             align='center'
                         >
-                            <DisplayBookings/>
-                            <DisplayBookings/>
-                            <DisplayBookings/> 
-                            <DisplayBookings/>
-                            <DisplayBookings/>
+                            { arrSlots.map(element => <div> {element} </div> ) }
                         </Space>
                     </Breadcrumb>
                     </div>

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import { Button, Space, Row, DatePicker } from 'antd';
+import { Button, Space, Row, DatePicker, Breadcrumb, Col, Card, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
 import './Bookings.css'
 import SlotService from "../services/slot.service";
@@ -9,9 +9,7 @@ import history from './../history';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Input, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
-import Display from "./DisplayBookings"
 import AuthService from "../services/auth.service";
-
 
 // const booking = { bookingID: undefined }
 
@@ -31,21 +29,19 @@ import AuthService from "../services/auth.service";
 // SlotService.cancalledBooking(currentSlot.id, currentUser.id)
 
 function MakeBookings() {
-    const [currentUser] = useState(AuthService.getCurrentUser());
-    if (!currentUser) {
-        history.push('/');
-        //window.location.reload();
-    }
-
-    const [slotsAvail, setSlotAvail] = useState(false)
+    const currentUser = AuthService.getCurrentUser()
 
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat).toString());
     const today = moment();
-
     const todayDate = JSON.stringify(new Date()).substring(1, 11);
 
+    const [slotsAvail, setSlotAvail] = useState(false)
+    const [container, setContainer] = useState(null);
     const [slots, setSlots] = useState([]);
+    const arrSlots = []
+    var bookedSlots =[]
+    const len = slots.length;
 
     if (slots.length === 0) {
         SlotService.fetchSlots(todayDate).then(
@@ -93,9 +89,48 @@ function MakeBookings() {
         return 0;
     }
 
-    useEffect(() => {       // not sure what this does
-        console.log('the age has changed', date)
-    }, [date])
+    function bookingsLen() {
+        return bookedSlots.length > 2 ? true : false;
+    }
+
+    function DisplayBookings(props) {
+        const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
+
+        const onChange = (e) => {
+            isChecked.current = [e.target.checked, props.slot.date.slice(0,10), props.slot.startTime];
+            console.log(isChecked);
+            if (isChecked.current[0]) {
+                bookedSlots.push(props.slot)
+            } else {
+                if (bookedSlots.length !== 0) {
+                    bookedSlots = bookedSlots.filter(element => element !== props.slot)
+                }
+            }
+            console.log(bookedSlots)
+        }
+    
+        const Time = (time) => {
+            return time <= 12 ? `${time}am` : `${time - 12}pm`
+        }
+        
+        return(
+            <div>
+                <Card className='bookingStyle'>
+                    <Row gutter={10}>
+                    <Col span={15} style={{ padding: '8px 0' }} wrap="false">
+                        <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
+                    </Col>
+                    <Col span={5}>
+                        <Checkbox className="ant-checkbox" onChange={onChange}/>
+                    </Col>
+                    </Row>
+                </Card>
+                    
+            </div>
+        );
+    }
+    
+
 
     return (
         <div style={{ background: "74828F", alignItems: "center" }}>
@@ -109,21 +144,45 @@ function MakeBookings() {
                 >
                     <text className="booking">Make Bookings</text>
                     {
-                        slotsAvail ? <Display slots={slots}/>  : <Row/>   
+                        slotsAvail ? slots.forEach(element => {arrSlots.push(<DisplayBookings slot={element}/>)}): <Row/> 
+                        //<Display slots={element} user={currentUser}/>
                     }
-                    <Space>
+                    <Space >
                         <DatePicker
                             defaultValue={today}
                             onChange={onChangeDate}
                         />
                     </Space>
+                    <Breadcrumb target={() => container}>
+                        <Space
+                            style={{ background: "74828F", alignItems: "center" }}
+                            direction="vertical"
+                            size={'small'}
+                            align='center'
+                        >
+                            { arrSlots.map(element => <div> {element} </div> ) }
+                        </Space>   
+                    </Breadcrumb>
                     <Button
                         type="primary"
                         shape="round"
+                        disabled={bookingsLen()}
                         style={{ background: "#525564", width: 500, height: 50, fontSize: 25, border: "none", color: "#white" }}
                         onClick={() => {
-                            SlotService.clearCurrentSlots(date); // halp
-                            //window.location.reload(false);
+                            //SlotService.clearCurrentSlots(date); // halp
+                            bookedSlots.forEach(elements => {
+                                const booking = { bookingID: undefined }
+                                //console.log(elements)
+                                
+                                SlotService.bookSlot(elements._id, currentUser.id, currentUser.email)
+                                SlotService.recordBooking(elements._id, currentUser.id).then(newBooking => { booking.bookingID = newBooking._id })
+                                AuthService.updateBooking(currentUser.email, booking.bookingID).then(
+                                    () => AuthService.updateCurrentUser(currentUser.email, currentUser.password)
+                                )
+                                //window.location.reload(false);
+                                //history.push("/Bookings")
+                                
+                            })
                         }}
                     >
                         Confirm Booking
