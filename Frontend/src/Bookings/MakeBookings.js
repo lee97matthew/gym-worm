@@ -10,6 +10,8 @@ import 'react-calendar-heatmap/dist/styles.css';
 import { Input, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import Display from "./DisplayBookings"
+import AuthService from "../services/auth.service";
+
 
 // const booking = { bookingID: undefined }
 
@@ -29,6 +31,12 @@ import Display from "./DisplayBookings"
 // SlotService.cancalledBooking(currentSlot.id, currentUser.id)
 
 function MakeBookings() {
+    const [currentUser] = useState(AuthService.getCurrentUser());
+    if (!currentUser) {
+        history.push('/');
+        //window.location.reload();
+    }
+
     const [slotsAvail, setSlotAvail] = useState(false)
 
     const dateFormat = "YYYY-MM-DD";

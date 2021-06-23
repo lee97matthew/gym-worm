@@ -4,18 +4,34 @@ import 'antd/dist/antd.css';
 import Information from "./Information/Information";
 import Notif from "./Notif/Notif";
 import Navbar from '../components/Navbar/Navbar';
-
+import history from "../history";
+import AuthService from "../services/auth.service";
 
 const { Content, Sider } = Layout;
 
 class Profile extends Component {
-    state = { clicked: true }
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            currentUser: AuthService.getCurrentUser(),
+            clicked: true
+        };
+    }
+
+    //state = { clicked: true }
 
     handleClick = (theState) => {
         this.setState({ clicked: theState })
     }
 
     render() {
+        const { currentUser } = this.state;
+        if (!currentUser) {
+            history.push('/');
+            //window.location.reload();
+        }
+
         return (
             <div style={{background:'#74828F'}}>
                 <Navbar/>

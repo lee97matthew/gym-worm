@@ -7,6 +7,7 @@ import DisplayBookings from './DisplayBookings/DisplayBookings';
 import Credits from './Credits/Credits';
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
+import history from "../history";
 
 const { Header, Content } = Layout;
 document.body.style = 'background: #74828F;';
@@ -22,6 +23,10 @@ class Home extends Component {
 
     render() {
         const { currentUser } = this.state;
+        if (!currentUser) {
+            history.push('/');
+            //window.location.reload();
+        }
 
         return (
             <div>

@@ -22,8 +22,8 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  updateInfo(firstName, lastName, email, contactNo) {
-    return axios
+  async updateInfo(firstName, lastName, email, contactNo) {
+    return await axios
       .put(API_URL + 'update', {
         firstName,
         lastName,
@@ -35,8 +35,8 @@ class AuthService {
       })
   }
 
-  updateBooking(email, bookingID) {
-    return axios
+  async updateBooking(email, bookingID) {
+    return await axios
       .put(API_URL + 'update', {
         email,
         bookingID
@@ -72,8 +72,8 @@ class AuthService {
     return JSON.parse(localStorage.getItem('user'));;
   }
 
-  updateCurrentUser(email, password) {
-    return axios
+  async updateCurrentUser(email, password) {
+    return await axios
       .post(API_URL + "updateSignin", {
         email,
         password
@@ -87,8 +87,8 @@ class AuthService {
       });
   }
 
-  updateEmailNotifications(email, emailNotification) {
-    return axios
+  async updateEmailNotifications(email, emailNotification) {
+    return await axios
       .put(API_URL + 'update', {
         email,
         emailNotification
@@ -98,8 +98,8 @@ class AuthService {
       })
   }
 
-  updateSMSNotifications(email, contactNotification) {
-    return axios
+  async updateSMSNotifications(email, contactNotification) {
+    return await axios
       .put(API_URL + 'update', {
         email,
         contactNotification
@@ -109,8 +109,8 @@ class AuthService {
       })
   }
 
-  updateTelegramNotifications(email, telegramNotification) {
-    return axios
+  async updateTelegramNotifications(email, telegramNotification) {
+    return await axios
       .put(API_URL + 'update', {
         email,
         telegramNotification

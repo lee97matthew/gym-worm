@@ -122,7 +122,7 @@ function Information() {
                         style={{ background: "#96c0ce", width: 200, border: "none" }}
                         onClick={() => {
                             onUpdate();
-                            //window.location.reload(false);
+                            //</Space>window.location.reload(false);
                         }}
                     >
                         Update

@@ -3,7 +3,15 @@ import Navbar from '../components/Navbar/Navbar';
 import { Breadcrumb, Button, Space, Col, Row, Card, Checkbox } from 'antd';
 import history from "../history";
 import 'antd/dist/antd.css';
-import './Bookings.css'
+import './Bookings.css';
+import AuthService from "../services/auth.service";
+
+const currentUser = AuthService.getCurrentUser();
+
+    if (!currentUser) {
+        history.push('/');
+        //window.location.reload();
+    }
 
 function DisplayBookings() {
     const [isChecked, setChecked] = useState(false);
@@ -15,7 +23,6 @@ function DisplayBookings() {
 
     return(
         <div>
-            
                 <Card className='bookingStyle'>
                     <Row gutter={10}>
                     <Col span={15} style={{ padding: '8px 0' }} wrap="false">
