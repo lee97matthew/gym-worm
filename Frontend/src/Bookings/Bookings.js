@@ -5,22 +5,24 @@ import history from "../history";
 import 'antd/dist/antd.css';
 import './Bookings.css'
 import AuthService from "../services/auth.service";
+import SlotService from "../services/slot.service";
 
 // to Delete booking from user,
 // AuthService.cancelBooking(currentUser.email, booking.bookingID)
 // SlotService.cancalledBooking(currentSlot.id, currentUser.id)
 
 // to retrieve user's booking slots,
-// take from currentUser.bookings[i].slot
+// take from SlotService.retrieveSlot(currentUser.bookings[i].slot)
 
 function Bookings() {
     const [container, setContainer] = useState(null);
     const currentUser = AuthService.getCurrentUser()
+    const arrSlots = []
+    var cancelSlots =[]
+    
     if (currentUser) {
         AuthService.updateCurrentUser(currentUser.email, currentUser.password);
     }   
-    const arrSlots = []
-    var cancelSlots =[]
     console.log(currentUser)
 
     function DisplayBookings(props) {

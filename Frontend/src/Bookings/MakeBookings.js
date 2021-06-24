@@ -3,25 +3,13 @@ import Navbar from '../components/Navbar/Navbar';
 import { Button, Space, Row, DatePicker, Breadcrumb, Col, Card, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
 import './Bookings.css'
-import SlotService from "../services/slot.service";
 import moment from 'moment';
 import history from './../history';
 import 'react-calendar-heatmap/dist/styles.css';
 import { Input, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import SlotService from "../services/slot.service";
 import AuthService from "../services/auth.service";
-
-// const booking = { bookingID: undefined }
-
-// Step 1 : When a slot is selected, and user is logged in, pass in this 3 variables to update the slot's userList and capacity.
-// SlotService.bookSlot(currentSlot.id, currentUser.id, currentUser.email)
-
-// Step 2 : After updating the slot, we need to create the booking record. Need to pass in the same slot id and same user id. 
-//          It will create a new booking object and save the id into const booking
-// SlotService.recordBooking(currentSlot.id, currentUser.id).then(newBooking => { booking.bookingID = newBooking.id })
-
-// Step 3 : We then have to update the user's bookings. Pass in the user's email and booking id
-// AuthService.updateBooking(currentUser.email, booking.bookingID).then( follow information page's updateCurrentUser(currentUser.email, currentUser.password) ). etc etc
 
 function MakeBookings() {
     const currentUser = AuthService.getCurrentUser()
@@ -35,7 +23,7 @@ function MakeBookings() {
     const [container, setContainer] = useState(null);
     const [slots, setSlots] = useState([]);
     const arrSlots = []
-    var bookedSlots = []
+    var bookedSlots =[]
     const len = slots.length;
 
     if (slots.length === 0) {
@@ -54,8 +42,6 @@ function MakeBookings() {
         );
     }
 
-    //const [slots, setSlots] = useState(SlotService.fetchSlots(moment().format(dateFormat).toString()));
-    //const [slots, setSlots] = useState(SlotService.getCurrentSlots(JSON.stringify(today)) || []);
     function onChangeDate(theDate, dateString) {
         date.current = JSON.parse(JSON.stringify(dateString));
         console.log("date is " + date.current.toString());
@@ -93,10 +79,10 @@ function MakeBookings() {
     }
 
     function DisplayBookings(props) {
-        const isChecked = useRef([false, props.slot.date.slice(0, 10), props.slot.startTime]);
+        const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
 
         const onChange = (e) => {
-            isChecked.current = [e.target.checked, props.slot.date.slice(0, 10), props.slot.startTime];
+            isChecked.current = [e.target.checked, props.slot.date.slice(0,10), props.slot.startTime];
             console.log(isChecked);
             if (isChecked.current[0]) {
                 bookedSlots.push(props.slot)
@@ -107,28 +93,28 @@ function MakeBookings() {
             }
             console.log(bookedSlots)
         }
-
+    
         const Time = (time) => {
             return time <= 12 ? `${time}am` : `${time - 12}pm`
         }
-
-        return (
+        
+        return(
             <div>
                 <Card className='bookingStyle'>
                     <Row gutter={10}>
-                        <Col span={15} style={{ padding: '8px 0' }} wrap="false">
-                            <p className='text'>{`Date: ${props.slot.date.slice(0, 10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
-                        </Col>
-                        <Col span={5}>
-                            <Checkbox className="ant-checkbox" onChange={onChange} />
-                        </Col>
+                    <Col span={15} style={{ padding: '8px 0' }} wrap="false">
+                        <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
+                    </Col>
+                    <Col span={5}>
+                        <Checkbox className="ant-checkbox" onChange={onChange}/>
+                    </Col>
                     </Row>
                 </Card>
-
+                    
             </div>
         );
     }
-
+    
 
 
     return (
@@ -143,7 +129,7 @@ function MakeBookings() {
                 >
                     <text className="booking">Make Bookings</text>
                     {
-                        slotsAvail ? slots.forEach(element => { arrSlots.push(<DisplayBookings slot={element} />) }) : <Row />
+                        slotsAvail ? slots.forEach(element => {arrSlots.push(<DisplayBookings slot={element}/>)}): <Row/> 
                         //<Display slots={element} user={currentUser}/>
                     }
                     <Space >
@@ -159,8 +145,8 @@ function MakeBookings() {
                             size={'small'}
                             align='center'
                         >
-                            {arrSlots.map(element => <div> {element} </div>)}
-                        </Space>
+                            { arrSlots.map(element => <div> {element} </div> ) }
+                        </Space>   
                     </Breadcrumb>
                     <Button
                         type="primary"
@@ -179,8 +165,7 @@ function MakeBookings() {
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
                             history.push('/Bookings');
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
-                            window.location.reload(false);
-
+                            window.location.reload(false);  
                         }}
                     >
                         Confirm Booking

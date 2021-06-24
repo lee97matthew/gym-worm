@@ -21,6 +21,10 @@ class Home extends Component {
         };
     }
 
+    if (currentUser) {
+        AuthService.updateCurrentUser(currentUser.email, currentUser.password);
+    }   
+
     render() {
         const { currentUser } = this.state;
         if (!currentUser) {
