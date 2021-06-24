@@ -236,7 +236,7 @@ exports.updateSignin = (req, res) => {
       }
       //console.log(authorities);
 
-      console.log("Updated notifications for " + user.email);
+      console.log("Updated for " + user.email);
 
       res.status(200).send({
         id: user._id,
@@ -253,7 +253,8 @@ exports.updateSignin = (req, res) => {
         banStatus: user.banStatus,
         banDuration: user.banDuration,
         banStartDate: user.banStartDate,
-        accessToken: token
+        accessToken: token,
+        bookings: user.bookings
       });
     });
 };

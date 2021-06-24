@@ -2,8 +2,6 @@ const db = require("../models");
 const User = db.user;
 const Slot = db.slot;
 const Booking = db.booking;
-//const { SlotService } = require("../../Frontend/services/slot.service");
-//const AuthService = require("../routes/auth.routes");
 
 exports.createSlot = (req, res) => {
   if (req) {
@@ -23,7 +21,7 @@ exports.createSlot = (req, res) => {
   });
 
   newSlot.save()
-    .then(() => res.send({message: 'Slot Created!'}))
+    .then(() => res.send({ message: 'Slot Created!' }))
     .catch(err => res.status(500).json('Error: ' + err));
 }
 
@@ -141,6 +139,31 @@ exports.recordBooking = (req, res) => {
       return res.status(400).send({ message: err })
     }
     console.log("Booking is successfully recorded");
+    console.log("Adding booking to user's records");
+
+    console.log("Booking id is " + booking.id);
+
+    User.findOne({
+      _id: req.body.userID
+    })
+      .exec((err, user) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        if (booking.id !== undefined) {
+          user.bookings.push({ _id: booking.id });
+        }
+
+        user.save((err, newUser) => {
+          if (err) {
+            return res.status(400).send({ message: err })
+          }
+          //return res.status(200).send(newUser);
+        });
+      });
+
     return res.send(booking);
   });
 };
@@ -171,4 +194,27 @@ exports.cancelledBooking = (req, res) => {
       return res.send(updatedSlot);
     });
   });
+};
+
+exports.retrieveSlot = (req, res) => {
+  if (req) {
+    console.log("retrieveSlot req exist");
+  }
+  console.log(req.body.slotID);
+
+  Slot.find({
+    _id: req.body.slotID
+  })
+    .exec((err, slot) => {
+      if (err) {
+        return res.status(500).send({ message: req });
+      }
+
+      console.log(slot);
+
+      return res.status(200).send({
+        slot
+      });
+    });
+
 };

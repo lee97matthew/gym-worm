@@ -6,9 +6,19 @@ import 'antd/dist/antd.css';
 import './Bookings.css'
 import AuthService from "../services/auth.service";
 
+// to Delete booking from user,
+// AuthService.cancelBooking(currentUser.email, booking.bookingID)
+// SlotService.cancalledBooking(currentSlot.id, currentUser.id)
+
+// to retrieve user's booking slots,
+// take from currentUser.bookings[i].slot
+
 function Bookings() {
     const [container, setContainer] = useState(null);
     const currentUser = AuthService.getCurrentUser()
+    if (currentUser) {
+        AuthService.updateCurrentUser(currentUser.email, currentUser.password);
+    }   
     const arrSlots = []
     var cancelSlots =[]
     console.log(currentUser)

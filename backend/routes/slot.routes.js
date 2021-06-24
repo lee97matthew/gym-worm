@@ -20,4 +20,6 @@ module.exports = function (app) {
     app.post("/api/slot/recordBooking", controller.recordBooking); 
 
     app.put("/api/slot/cancelledBooking", controller.cancelledBooking); 
+
+    app.post("/api/slot/retrieveSlot", controller.retrieveSlot);
 };
