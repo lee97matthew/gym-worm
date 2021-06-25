@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import { Breadcrumb, Button, Space, Col, Row, Card, Checkbox } from 'antd';
 import history from "../history";
@@ -6,6 +6,7 @@ import 'antd/dist/antd.css';
 import './Bookings.css'
 import AuthService from "../services/auth.service";
 import SlotService from "../services/slot.service";
+import axios from "axios";
 
 // to Delete booking from user,
 // AuthService.cancelBooking(currentUser.email, booking.bookingID)
@@ -13,17 +14,20 @@ import SlotService from "../services/slot.service";
 
 // to retrieve user's booking slots,
 // take from SlotService.retrieveSlot(currentUser.bookings[i].slot)
+const API_URL = "http://localhost:5000/api/slot/";
 
 function Bookings() {
     const [container, setContainer] = useState(null);
+    const [slots, setSlots] = useState([])
     const currentUser = AuthService.getCurrentUser()
+    //var slots = []
     const arrSlots = []
     var cancelSlots =[]
-    
+    var test;
+
     if (currentUser) {
         AuthService.updateCurrentUser(currentUser.email, currentUser.password);
     }   
-    console.log(currentUser)
 
     function DisplayBookings(props) {
         const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
@@ -50,7 +54,7 @@ function Bookings() {
                 <Card className='bookingStyle'>
                     <Row gutter={10}>
                     <Col span={15} style={{ padding: '8px 0' }} wrap="false">
-                        <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
+                        <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)}`}</p>
                     </Col>
                     <Col span={5}>
                         <Checkbox className="ant-checkbox" onChange={onChange}/>
@@ -62,6 +66,25 @@ function Bookings() {
         );
     }
 
+    
+
+   useEffect(() => {
+    const temp = []
+         currentUser.bookings.forEach(slot => {
+             (async () => {
+                 const res = await axios.post(API_URL + 'retrieveSlot', { bookingID: slot });
+                 const posts = res.data.slot;
+                 temp.push([posts, slot])
+                 if (temp.length === currentUser.bookings.length) {
+                     setSlots(temp)
+                 }
+                 console.log(temp)
+             })()
+         })
+     
+    }, [])
+
+   console.log(slots)
     return(
         <div style={{ background: "74828F", alignItems: "center" }}>
             <Navbar/>
@@ -74,13 +97,21 @@ function Bookings() {
                 >
                     <text className="booking">Current Bookings</text>
                     <div className="scrollable-container" ref={setContainer} style={{ height:280 }}>
-                    <Breadcrumb target={() => container}>
+                    <Breadcrumb target={() => container} id="slots">
                         <Space 
                             style={{ background: "74828F", alignItems: "center" }} 
                             direction="vertical" size={'small'} 
                             align='center'
+                           
                         >
-                            { arrSlots.map(element => <div> {element} </div> ) }
+
+                    { 
+                       slots.length === 0 ? null : slots.forEach( element =>arrSlots.push(<DisplayBookings slot={element[0]}/>))
+                    }
+                    {
+                        slots.length === 0 ? null : arrSlots.map(elements => <div> {elements} </div>) 
+                    }
+                    
                         </Space>
                     </Breadcrumb>
                     </div>
@@ -89,8 +120,19 @@ function Bookings() {
                         shape="round"
                         style={{ background: "#525564", width: 500, height:50, fontSize: 25,border: "none", color: "#ff7d7d" }}
                         onClick={() => {
+                            cancelSlots.forEach( s => {
+                                var id;
+                                slots.forEach(element => {
+                                    if (s._id === element[0]._id) {
+                                        id = element[1]
+                                    } 
+                                })
+
+                                AuthService.cancelBooking(currentUser.email, id)
+                                SlotService.cancelledBooking(s._id, currentUser.id)
+                            })
                             
-                            //window.location.reload(false);
+                            window.location.reload(false);
                         }}
                     >
                         Cancel Bookings

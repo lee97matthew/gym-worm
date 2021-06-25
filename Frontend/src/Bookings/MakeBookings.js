@@ -102,10 +102,10 @@ function MakeBookings() {
             <div>
                 <Card className='bookingStyle'>
                     <Row gutter={10}>
-                    <Col span={15} style={{ padding: '8px 0' }} wrap="false">
+                    <Col span={16} style={{ padding: '6px 2px' }} wrap="false">
                         <p className='text'>{`Date: ${props.slot.date.slice(0,10)} Time: ${Time(props.slot.startTime)} Vacancy: ${props.slot.capacity}`}</p>
                     </Col>
-                    <Col span={5}>
+                    <Col span={3}>
                         <Checkbox className="ant-checkbox" onChange={onChange}/>
                     </Col>
                     </Row>
@@ -163,7 +163,9 @@ function MakeBookings() {
                                 SlotService.clearCurrentSlots(elements.date.substring(0, 10));
                             });
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
+                            AuthService.updateCurrentUser(currentUser.email, currentUser.password);
                             history.push('/Bookings');
+                            window.location.reload(false); 
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
                             window.location.reload(false);  
                         }}
