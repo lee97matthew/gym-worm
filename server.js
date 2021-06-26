@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 // Setting up MongoDB Atlas Port
 require('dotenv').config();
@@ -70,9 +71,6 @@ function initial() {
 //app.use('/users', usersRouter); // Users DB
 
 //    -- new routes
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Gym Worm." });
-});
 
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
@@ -83,6 +81,18 @@ require('./routes/slot.routes')(app);
   console.error(err.stack)
   res.status(500).send('Something broke!')
 })*/
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send("API Running, Welcome to Gym Worm!");
+  });
+}
 
 // Initialize Server
 app.listen(port, () => {
