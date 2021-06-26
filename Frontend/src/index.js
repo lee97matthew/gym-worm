@@ -10,7 +10,7 @@ import './index.css';
 import Routes from './Routes';
 
 ReactDOM.render(
-    <Router >
+    <Router forceRefresh={true}>
         <div className="App">
             <Routes/>
         </div>

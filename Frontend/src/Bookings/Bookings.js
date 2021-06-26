@@ -20,6 +20,7 @@ function Bookings() {
     const [container, setContainer] = useState(null);
     const [slots, setSlots] = useState([])
     const currentUser = AuthService.getCurrentUser()
+
     //var slots = []
     const arrSlots = []
     var cancelSlots =[]
@@ -28,6 +29,11 @@ function Bookings() {
     if (currentUser) {
         AuthService.updateCurrentUser(currentUser.email, currentUser.password);
     }   
+
+    if(!window.location.hash.includes("#reloaded")) {
+        window.location.href += "#reloaded";
+        window.location.reload()
+    }
 
     function DisplayBookings(props) {
         const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
@@ -66,7 +72,9 @@ function Bookings() {
         );
     }
 
-    
+    const reload = () => {
+        window.location.reload()
+    }
 
    useEffect(() => {
     const temp = []
@@ -82,9 +90,8 @@ function Bookings() {
              })()
          })
      
-    }, [])
+    }, []) 
 
-   console.log(slots)
     return(
         <div style={{ background: "74828F", alignItems: "center" }}>
             <Navbar/>
@@ -97,19 +104,18 @@ function Bookings() {
                 >
                     <text className="booking">Current Bookings</text>
                     <div className="scrollable-container" ref={setContainer} style={{ height:280 }}>
-                    <Breadcrumb target={() => container} id="slots">
+                    <Breadcrumb target={() => container} id="slots" >
                         <Space 
                             style={{ background: "74828F", alignItems: "center" }} 
                             direction="vertical" size={'small'} 
                             align='center'
-                           
                         >
 
                     { 
                        slots.length === 0 ? null : slots.forEach( element =>arrSlots.push(<DisplayBookings slot={element[0]}/>))
                     }
                     {
-                        slots.length === 0 ? null : arrSlots.map(elements => <div> {elements} </div>) 
+                        slots.length === 0 ? null : arrSlots.map(elements => <div> {elements} </div> ) 
                     }
                     
                         </Space>
@@ -126,13 +132,11 @@ function Bookings() {
                                     if (s._id === element[0]._id) {
                                         id = element[1]
                                     } 
-                                })
-
+                                }) 
                                 AuthService.cancelBooking(currentUser.email, id)
                                 SlotService.cancelledBooking(s._id, currentUser.id)
                             })
-                            
-                            window.location.reload(false);
+                            window.location.reload();
                         }}
                     >
                         Cancel Bookings

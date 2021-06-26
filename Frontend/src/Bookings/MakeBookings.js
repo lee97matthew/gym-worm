@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import { Button, Space, Row, DatePicker, Breadcrumb, Col, Card, Checkbox } from 'antd';
 import 'antd/dist/antd.css';
@@ -10,9 +10,11 @@ import { Input, Tooltip } from 'antd';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import SlotService from "../services/slot.service";
 import AuthService from "../services/auth.service";
+import axios from "axios";
 
 function MakeBookings() {
     const currentUser = AuthService.getCurrentUser()
+    const API_URL = "http://localhost:5000/api/slot/";
 
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat).toString());
@@ -21,17 +23,18 @@ function MakeBookings() {
 
     const [slotsAvail, setSlotAvail] = useState(false)
     const [container, setContainer] = useState(null);
-    const [slots, setSlots] = useState([]);
+    const [userSlots, setUserSlots] = useState([]);
     const arrSlots = []
     var bookedSlots =[]
+    const [slots, setSlots] = useState([])
     const len = slots.length;
 
-    if (slots.length === 0) {
+    if (getLength() === 0) {
         SlotService.fetchSlots(todayDate).then(
             () => {
                 console.log("finding slots for " + todayDate);
                 setSlots(SlotService.getCurrentSlots(todayDate));
-                setSlotAvail(true)
+                getLength() === 0 ? setSlotAvail(false) : setSlotAvail(true)
 
             },
             error => {
@@ -41,6 +44,24 @@ function MakeBookings() {
             }
         );
     }
+
+    useEffect(() => {
+        const temp = []
+             currentUser.bookings.forEach(slot => {
+                 (async () => {
+                     const res = await axios.post(API_URL + 'retrieveSlot', { bookingID: slot });
+                     const posts = res.data.slot;
+                     temp.push(posts)
+                     if (temp.length === currentUser.bookings.length) {
+                        setUserSlots(temp)
+                     }
+                     console.log(temp)
+                 })()
+             })
+         
+        }, []) 
+
+    console.log(userSlots);
 
     function onChangeDate(theDate, dateString) {
         date.current = JSON.parse(JSON.stringify(dateString));
@@ -56,8 +77,17 @@ function MakeBookings() {
         SlotService.fetchSlots(checkDate.currentDate).then(
             () => {
                 console.log("finding slots for " + date.current);
-                setSlots(SlotService.getCurrentSlots(checkDate.currentDate));
-                setSlotAvail(true)
+                setSlots(SlotService.getCurrentSlots(checkDate.currentDate).filter(s => {
+                    var test = true;
+                    userSlots.forEach(us => {
+                        if (s._id === us._id) {
+                            test = false
+                        }
+                    })  
+                    return test;
+                }));
+                console.log(slots)
+                getLength() === 0 ? setSlotAvail(false) : setSlotAvail(true)
             },
             error => {
                 console.log("cant find slot for " + date.current + " " + error);
@@ -80,7 +110,6 @@ function MakeBookings() {
 
     function DisplayBookings(props) {
         const isChecked = useRef([false, props.slot.date.slice(0,10), props.slot.startTime]);
-
         const onChange = (e) => {
             isChecked.current = [e.target.checked, props.slot.date.slice(0,10), props.slot.startTime];
             console.log(isChecked);
@@ -128,8 +157,8 @@ function MakeBookings() {
                     align='center'
                 >
                     <text className="booking">Make Bookings</text>
-                    {
-                        slotsAvail ? slots.forEach(element => {arrSlots.push(<DisplayBookings slot={element}/>)}): <Row/> 
+                    {                        
+                        slotsAvail ? slots.forEach(element => {arrSlots.push(<DisplayBookings slot={element}/>)}) : <Row/> 
                         //<Display slots={element} user={currentUser}/>
                     }
                     <Space >
@@ -164,13 +193,25 @@ function MakeBookings() {
                             });
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
-                            history.push('/Bookings');
-                            window.location.reload(false); 
+                            window.location.reload();
                             AuthService.updateCurrentUser(currentUser.email, currentUser.password);
-                            window.location.reload(false);  
+                            window.location.reload();  
                         }}
                     >
                         Confirm Booking
+                    </Button>
+                    <Button
+                        type="primary"
+                        shape="round"
+                        disabled={bookingsLen()}
+                        style={{ background: "#525564", width: 200, height: 50, fontSize: 25, border: "none", color: "#white" }}
+                        onClick={() => {
+                            history.push("/Bookings")
+                            AuthService.updateCurrentUser(currentUser.email, currentUser.password);
+                            window.location.reload(); 
+                        }}
+                    >
+                        Back
                     </Button>
 
                     {/*hello u can ignore these below, im just testing the retrieving*/}
