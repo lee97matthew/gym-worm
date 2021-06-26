@@ -83,15 +83,17 @@ class SlotService {
             })
     }
 
-    async retrieveSlot(slotID) {
+    
+    async retrieveSlot(bookingID) {
         return await axios
-            .post(API_URL + "retrieveSlot", {
-                slotID
+            .get(API_URL + "retrieveSlot", {
+                bookingID
             })
             .then(response => {
                 return response.data;
             });
     }
+    
 }
 
 export default new SlotService();

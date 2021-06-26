@@ -198,23 +198,27 @@ exports.cancelledBooking = (req, res) => {
 
 exports.retrieveSlot = (req, res) => {
   if (req) {
-    console.log("retrieveSlot req exist");
+   console.log("retrieveSlot req exist");
   }
-  console.log(req.body.slotID);
+  console.log(req.body.bookingID);
 
-  Slot.find({
-    _id: req.body.slotID
+  Booking.find({
+    _id: req.body.bookingID
   })
-    .exec((err, slot) => {
+    .exec((err, booking) => {
       if (err) {
         return res.status(500).send({ message: req });
       }
 
-      console.log(slot);
+      console.log(booking);
+      //console.log(booking[0].slot);
 
-      return res.status(200).send({
-        slot
+      Slot.findOne({ _id: booking[0].slot }, (err, slot) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        return res.status(200).send({slot}); 
       });
     });
-
 };

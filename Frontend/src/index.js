@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import './index.css';
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -10,7 +10,7 @@ import './index.css';
 import Routes from './Routes';
 
 ReactDOM.render(
-    <Router>
+    <Router >
         <div className="App">
             <Routes/>
         </div>
