@@ -92,7 +92,6 @@ exports.signin = (req, res) => {
           message: "Invalid Password!"
         });
       }
-      //console.log("password is valid : " + passwordIsValid);
 
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400 // 24 hours
@@ -101,8 +100,6 @@ exports.signin = (req, res) => {
       var authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
-        //console.log(user.roles);
-        //authorities.push("ROLE_" + JSON.parse(JSON.stringify(user.roles[i])).name.toUpperCase());
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
       console.log(user.email + " logging in");
@@ -231,10 +228,8 @@ exports.updateSignin = (req, res) => {
       var authorities = [];
 
       for (let i = 0; i < user.roles.length; i++) {
-        //console.log(user.roles);
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-      //console.log(authorities);
 
       console.log("Updated for " + user.email);
 

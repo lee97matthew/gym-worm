@@ -211,7 +211,6 @@ exports.retrieveSlot = (req, res) => {
       }
 
       console.log(booking);
-      //console.log(booking[0].slot);
 
       Slot.findOne({ _id: booking[0].slot }, (err, slot) => {
         if (err) {

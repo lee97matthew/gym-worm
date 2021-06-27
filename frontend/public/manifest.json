@@ -1,19 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Gym Worm",
+  "name": "Create by Computing students who know how to Code.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "gymworm logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "gymworm logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "gymworm logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }

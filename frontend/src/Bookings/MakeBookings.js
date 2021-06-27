@@ -16,7 +16,7 @@ function MakeBookings() {
     history.push('/MakeBookings');
 
     const currentUser = AuthService.getCurrentUser()
-    const API_URL = "https://gym-worm.herokuapp.com/api/slot/";
+    const API_URL = "https://gym-worm.herokuapp.com/api/slot/" || "http://localhost:5000/api/slot/";
 
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat).toString());
@@ -217,7 +217,7 @@ function MakeBookings() {
                     </Button>
 
                     {/*hello u can ignore these below, im just testing the retrieving*/}
-
+{/*
                     <Input style={{ borderRadius: 35, width: 500 }}
                         value={"number of slots for this day is " + getLength()}
                         prefix={<UserOutlined className="site-form-item-icon" />}
@@ -227,6 +227,7 @@ function MakeBookings() {
                             </Tooltip>
                         }
                     />
+                    */}
                 </Space>
             </Row>
         </div>

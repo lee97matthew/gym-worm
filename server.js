@@ -63,15 +63,6 @@ function initial() {
 }
 
 // Initialize Routes
-//    -- old routes
-//const slotsRouter = require('./routes/slots');
-//const usersRouter = require('./routes/users');
-
-//app.use('/slots', slotsRouter); // Slots DB
-//app.use('/users', usersRouter); // Users DB
-
-//    -- new routes
-
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 require('./routes/slot.routes')(app);

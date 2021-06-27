@@ -11,37 +11,9 @@ import history from "./history";
 import Login from "./Login/Login";
 import Signup from "./Signup/Signup";
 import MakeBookings from "./Bookings/MakeBookings"
-//import BoardUser from "./components/board-user.component";
-//import BoardAdmin from "./components/board-admin.component";
 
 class Routes extends Component {
-    /*constructor(props) {
-        super(props);
-        this.logOut = this.logOut.bind(this);
-
-        this.state = {
-            showAdminBoard: false,
-            currentUser: undefined,
-        };
-    }
-
-    componentDidMount() {
-        const user = AuthService.getCurrentUser();
-
-        if (user) {
-            this.setState({
-                currentUser: user,
-                showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-            });
-        }
-    }
-
-    logOut() {
-        AuthService.logout();
-    }
-    */
     render() {
-        //const { currentUser, showAdminBoard } = this.state;
         return (
             <BrowserRouter history={history}>
                 <Switch>

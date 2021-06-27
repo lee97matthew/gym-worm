@@ -11,7 +11,7 @@ import history from "../history";
 import axios from "axios";
 
 const { Header, Content } = Layout;
-const API_URL = "https://gym-worm.herokuapp.com/api/slot/";
+const API_URL = "https://gym-worm.herokuapp.com/api/slot/" || "http://localhost:5000/api/slot/";
 document.body.style = 'background: #74828F;';
 
 function Home() {
