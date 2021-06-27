@@ -158,8 +158,6 @@ function Login() {
                             disabled={disabled}
                             onClick={() => {
                                 onSubmit()
-                                //history.push('/Home')
-                                //window.location.reload(false);
                             }}>
                             Log in
                 </Button>

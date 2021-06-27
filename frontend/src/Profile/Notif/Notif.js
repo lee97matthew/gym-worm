@@ -20,7 +20,6 @@ class Notif extends Component {
             AuthService.updateEmailNotifications(currentUser.email, checked)
                 .then(
                     (newUser) => {
-                        //alert("Updated");
                         AuthService.updateCurrentUser(newUser.email, currentUser.password);
                         console.log("Successfully Updated");
                     },
@@ -36,7 +35,6 @@ class Notif extends Component {
             AuthService.updateSMSNotifications(currentUser.email, checked)
                 .then(
                     (newUser) => {
-                        //alert("Updated");
                         AuthService.updateCurrentUser(newUser.email, currentUser.password);
                         console.log("Successfully Updated");
                     },
@@ -52,7 +50,6 @@ class Notif extends Component {
             AuthService.updateTelegramNotifications(currentUser.email, checked)
                 .then(
                     (newUser) => {
-                        //alert("Updated");
                         AuthService.updateCurrentUser(newUser.email, currentUser.password);
                         console.log("Successfully Updated");
                     },

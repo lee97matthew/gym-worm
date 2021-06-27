@@ -3,7 +3,6 @@ import { Form, Input, Button, Row } from 'antd';
 import 'antd/dist/antd.css';
 import './Signup.css';
 import history from './../history';
-//import img from "../loginPhoto.jpeg";
 import AuthService from "../services/auth.service";
 
 document.body.style = 'background: #74828F;';

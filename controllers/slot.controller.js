@@ -65,8 +65,6 @@ exports.fetchSlots = (req, res) => {
   }
   console.log(req.body.currentDate);
 
-  //const dateFix = req.body.date + "T00:00:00.000Z";
-
   Slot.find({
     date: req.body.currentDate
   })
@@ -99,9 +97,6 @@ exports.bookSlot = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-
-    //console.log("userList is " + slot.userList);
-    //console.log("userID is " + req.body.userID);
 
     slot.userList.push(req.body.userID);
 
