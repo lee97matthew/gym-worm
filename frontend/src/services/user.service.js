@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:5000/api/test/';
+const API_URL = 'https://gym-worm.herokuapp.com/api/test/';
 
 class UserService {
   getPublicContent() {

@@ -8,7 +8,7 @@ import AuthService from "../services/auth.service";
 import SlotService from "../services/slot.service";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/slot/";
+const API_URL = "https://gym-worm.herokuapp.com/api/slot/";
 
 function Bookings() {
     history.push('/Bookings');

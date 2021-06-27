@@ -16,7 +16,7 @@ function MakeBookings() {
     history.push('/MakeBookings');
 
     const currentUser = AuthService.getCurrentUser()
-    const API_URL = "http://localhost:5000/api/slot/";
+    const API_URL = "https://gym-worm.herokuapp.com/api/slot/";
 
     const dateFormat = "YYYY-MM-DD";
     const date = useRef(moment().format(dateFormat).toString());
