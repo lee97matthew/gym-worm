@@ -65,7 +65,10 @@ class AuthService {
         email,
         password,
         contactNo
-      });
+      })
+      .then(response => {
+        return response.data;
+      })
   }
 
   getCurrentUser() {

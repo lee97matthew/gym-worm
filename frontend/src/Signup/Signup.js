@@ -70,7 +70,7 @@ function Signup() {
 
         AuthService.register(user.firstName, user.lastName, user.email, user.password, user.contactNo, user.roles).then(
             () => {
-                alert("Registering");
+                alert("Registration Successful");
                 console.log(user.email + " has registered");
                 history.push("/");
                 window.location.reload();
@@ -236,8 +236,8 @@ function Signup() {
                         disabled={ disabled }
                         onClick={() => { 
                             onSubmit()
-                            history.push('/Home')
-                            window.location.reload(false);
+                            //history.push('/Home')
+                            //window.location.reload(false);
                             }
                         }
                 >

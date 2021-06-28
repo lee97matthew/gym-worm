@@ -8,6 +8,12 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   console.log("signing up for " + req.body.email);
+
+  User.find({email: req.body.email}).then(() => {
+    console.log("Email already in use");
+    res.status(400).send({ message: "Failed! Email is already in use!" });
+  });
+
   const user = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
