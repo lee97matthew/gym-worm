@@ -1,24 +1,39 @@
-# Gym Worm
+# GymWorm
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+GymWorm can be found at [GymWorm](http://gym-worm.herokuapp.com).
+
 ## Description 
 
-This is a gym booking web application built using react 
+This is a gym booking web application built using the MERN stack. 
+
+### Support
+
+Please contact us on [Telegram](https://t.me/joinchat/LEL7TuOMqLozNWVl) if you face any issues, or the site crashes.
 
 # Important
 
-Please clone our development branch instead of master. Thanks.
+Please ensure NodeJS is installed before cloning the project.
 
-## Instruction to temporarily run the application
+## Instruction to run the application locally
 
-Once gym-worm repo is cloned, make sure you have nodejs installed \
-cd ./Frontend and ./backend\, then run npm install and npm start
+To clone our gym-worm repo,
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+git clone git@github.com:bloodofme/gym-worm.git
 
-To launch the connection to the server, cd backend\ then run npm install and npm run start
+### Backend
+cd to your gym-worm directory
+npm install
+npm start
 
-### Note
-Only the register and signin pages are functional as of now.
+### Frontend
+Open a new terminal
+
+cd .\frontend\
+npm install
+npm start
+
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+Cheers!
