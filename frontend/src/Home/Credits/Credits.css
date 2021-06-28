@@ -1,0 +1,23 @@
+.creditsStyle {
+    background: #96c0ce;
+    width: 350px;
+    height: 500px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+}
+
+.amountCredits {
+    font-size: 100px;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 15px;
+}
+
+.penaltiesText {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 130px;
+}

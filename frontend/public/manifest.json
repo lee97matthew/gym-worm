@@ -1,0 +1,25 @@
+{
+  "short_name": "Gym Worm",
+  "name": "Create by Computing students who know how to Code.",
+  "icons": [
+    {
+      "src": "gymworm logo.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "gymworm logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "gymworm logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
